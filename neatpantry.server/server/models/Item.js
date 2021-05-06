@@ -24,6 +24,7 @@ const Item = new Schema(
     quantity: { type: Number, default: 0 },
     creatorId: { type: String, ref: 'Account', required: true },
     shelfId: { type: ObjectId, ref: 'Shelf', required: true },
+    householdId: { type: ObjectId, ref: 'Household', required: true },
     listId: { type: ObjectId, ref: 'ShoppingListItem' },
     notes: [Note]
 
