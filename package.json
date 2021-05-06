@@ -1,0 +1,13 @@
+{
+  "name": "neatpantry",
+  "version": "1.0.0",
+  "scripts": {
+    "build": "npm run setup:client && npm run setup:server",
+    "setup:client": "cd neatpantry.client && npm i",
+    "setup:server": "cd neatpantry.server && npm i",
+    "start": "node neatpantry.server/index.js"
+  },
+  "engines": {
+    "node": "^14.15.4"
+  }
+}
