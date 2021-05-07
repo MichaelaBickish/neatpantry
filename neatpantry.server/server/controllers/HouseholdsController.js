@@ -19,9 +19,10 @@ export class HouseholdsController extends BaseController {
 
   async addCollaborator(req, res, next) {
     try {
-      req.body.creatorId = req.userInfo.id
-      const data = await householdsService.addCollaborator(req.params.id, req.body)
-      return res.send(data)
+      if (req.body.household.id && req.body.passcode) {
+        const data = await householdsService.addCollaborator(req.params.id, req.body)
+        return res.send(data)
+      }
     } catch (error) {
       next(error)
     }

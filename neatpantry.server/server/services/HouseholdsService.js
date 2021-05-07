@@ -38,7 +38,7 @@ class HouseholdsService {
   async deleteCollaborator(householdId, collaboratorId, userId) {
     const household = await this.findById(householdId)
     const collaborator = household.collaborator.id(collaboratorId)
-    if (household.creatorId === household.id && collaborator === householdId) {
+    if (household.creatorId && household.id === collaborator && householdId) {
       // await dbContext.Households.findOneAndDelete({ _id: householdId, creatorId: userId })
       collaborator.remove()
       await household.save()
