@@ -9,20 +9,28 @@ export class HouseholdsController extends BaseController {
     this.router
       // NOTE: Beyond this point all routes require Authorization tokens (the user must be logged in)
       .use(Auth0Provider.getAuthorizedUserInfo)
-      .get('', this.getByHouseholdId)
+      .get('', this.getAll)
+      .get('/:id', this.getByHouseholdId)
       .post('', this.create)
       .put('/:id', this.edit)
-      .post('/:id/collaborators/', this.addCollaborator)
+      .post('/:id/collaborators', this.joinHousehold)
       .delete('/:id/collaborators/:collaboratorId', this.deleteCollaborator)
       .delete('/:id', this.delete)
   }
 
-  async addCollaborator(req, res, next) {
+  async getAll(req, res, next) {
     try {
-      if (req.body.household.id && req.body.passcode) {
-        const data = await householdsService.addCollaborator(req.params.id, req.body)
-        return res.send(data)
-      }
+      const data = await householdsService.findAll({ collaborators: req.userInfo.id })
+      return res.send(data)
+    } catch (error) {
+      next(error)
+    }
+  }
+
+  async joinHousehold(req, res, next) {
+    try {
+      const data = await householdsService.joinHousehold(req.userInfo.id, req.params.id, req.body.passcode) // NOTE added .userId
+      return res.send(data)
     } catch (error) {
       next(error)
     }
@@ -32,7 +40,6 @@ export class HouseholdsController extends BaseController {
 
   async deleteCollaborator(req, res, next) {
     try {
-      req.body.creatorId = req.userInfo.id
       const household = await householdsService.deleteCollaborator(req.params.id, req.params.collaboratorId, req.userInfo.id)
       res.send({ message: 'collaborator removed', data: household })
     } catch (error) {
@@ -53,6 +60,7 @@ export class HouseholdsController extends BaseController {
   async create(req, res, next) {
     try {
       req.body.passcode = makePasscode()
+      req.body.collaborators = [req.userInfo.id]
       // NOTE NEVER TRUST THE CLIENT TO ADD THE CREATOR ID
       req.body.creatorId = req.userInfo.id
       const data = await householdsService.create(req.body)

@@ -2,13 +2,12 @@ import { dbContext } from '../db/DbContext'
 import { BadRequest } from '../utils/Errors'
 
 class HouseholdsService {
-  // async find(query = {}) {
-  //   const values = await dbContext.Values.find(query)
-  //   return values
-  // }
+  async findAll(query = {}) {
+    return await dbContext.Households.find(query).populate('collaboratorsProfiles', 'name picture')
+  }
 
   async findById(id) {
-    const household = await dbContext.Households.findOne(id)
+    const household = await dbContext.Households.findOne({ _id: id })
     if (!household) {
       throw new BadRequest('Invalid Household Id')
     }
@@ -16,7 +15,8 @@ class HouseholdsService {
   }
 
   async create(body) {
-    return await dbContext.Households.create(body)
+    const data = await dbContext.Households.create(body)
+    return data
   }
 
   async edit(body) {
@@ -35,24 +35,28 @@ class HouseholdsService {
     return 'Household Successfully Deleted!'
   }
 
+  // TODO reinstate stretch goal collaborator funcitons
+
   async deleteCollaborator(householdId, collaboratorId, userId) {
     const household = await this.findById(householdId)
-    const collaborator = household.collaborator.id(collaboratorId)
-    if (household.creatorId && household.id === collaborator && householdId) {
-      // await dbContext.Households.findOneAndDelete({ _id: householdId, creatorId: userId })
-      collaborator.remove()
+    const found = household.collaborators.find(c => c === collaboratorId)
+    if ((household.creatorId === userId || collaboratorId === userId) && found) {
+      household.collaborators = household.collaborators.filter(c => c !== collaboratorId)
       await household.save()
       return household
     }
-    throw new BadRequest('Invalid Id')
+    throw new BadRequest('Invalid')
   }
 
-  async addCollaborator(householdId, body) {
-    const updated = await dbContext.Households.findByIdAndUpdate({ _id: householdId }, { $push: { collaborator: body } }, { new: true })
-    if (!updated) {
-      throw new BadRequest('Invalid Id')
+  async joinHousehold(userId, householdId, passcode) {
+    const household = await this.findById(householdId)
+    const found = household.collaborators.find(c => c === userId)
+    if (household.passcode === passcode && !found) {
+      household.collaborators.push(userId)
+      await household.save()
+      return household
     }
-    return await this.findById(householdId)
+    throw new BadRequest('Invalid')
   }
 }
 

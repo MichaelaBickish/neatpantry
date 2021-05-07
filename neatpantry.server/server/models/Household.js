@@ -19,4 +19,10 @@ Household.virtual('creator', {
   justOne: true
 })
 
+Household.virtual('collaboratorsProfiles', {
+  localField: 'collaborators',
+  ref: 'Account',
+  foreignField: '_id'
+})
+
 export default Household

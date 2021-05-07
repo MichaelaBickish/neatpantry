@@ -8,6 +8,7 @@ export class AccountController extends BaseController {
     this.router
       .use(Auth0Provider.getAuthorizedUserInfo)
       .get('', this.getUserAccount)
+    // TODO .put('/:id' this.editAccount) if they want to edit their profile's picture and name
   }
 
   async getUserAccount(req, res, next) {
@@ -18,4 +19,9 @@ export class AccountController extends BaseController {
       next(error)
     }
   }
+
+  // TODO
+  // editAccount() {
+  //
+  // }
 }
