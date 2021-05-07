@@ -17,13 +17,26 @@ export class HouseholdsController extends BaseController {
       .delete('/:id', this.delete)
   }
 
-  async addCollaborator() {
+  async addCollaborator(req, res, next) {
+    try {
+      req.body.creatorId = req.userInfo.id
+      const data = await householdsService.addCollaborator(req.params.id, req.body)
+      return res.send(data)
+    } catch (error) {
+      next(error)
+    }
     // expect incoming object, that has a house id(params, userinfoid) body has passcode.
   }
   // service find house, verify passcode, push id to callaborator arrray and save it.
 
-  async deleteCollaborator() {
-
+  async deleteCollaborator(req, res, next) {
+    try {
+      req.body.creatorId = req.userInfo.id
+      const household = await householdsService.deleteCollaborator(req.params.id, req.params.collaboratorId, req.userInfo.id)
+      res.send({ message: 'collaborator removed', data: household })
+    } catch (error) {
+      next(error)
+    }
   }
 
   async getByHouseholdId(req, res, next) {

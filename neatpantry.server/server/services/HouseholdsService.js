@@ -27,12 +27,32 @@ class HouseholdsService {
     return 'Household Successfully Edited'
   }
 
-  async delete(id, userId) {
-    const data = await dbContext.Households.findOneAndDelete({ _id: id, creatorId: userId })
+  async delete(householdId, userId) {
+    const data = await dbContext.Households.findOneAndDelete({ _id: householdId, creatorId: userId })
     if (!data) {
       throw new BadRequest('Invalid Id')
     }
     return 'Household Successfully Deleted!'
+  }
+
+  async deleteCollaborator(householdId, collaboratorId, userId) {
+    const household = await this.findById(householdId)
+    const collaborator = household.collaborator.id(collaboratorId)
+    if (household.creatorId === household.id && collaborator === householdId) {
+      // await dbContext.Households.findOneAndDelete({ _id: householdId, creatorId: userId })
+      collaborator.remove()
+      await household.save()
+      return household
+    }
+    throw new BadRequest('Invalid Id')
+  }
+
+  async addCollaborator(householdId, body) {
+    const updated = await dbContext.Households.findByIdAndUpdate({ _id: householdId }, { $push: { collaborator: body } }, { new: true })
+    if (!updated) {
+      throw new BadRequest('Invalid Id')
+    }
+    return await this.findById(householdId)
   }
 }
 
