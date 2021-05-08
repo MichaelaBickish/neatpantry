@@ -21,9 +21,9 @@ class ShoppingListItemsService {
     return 'Successfully Edited'
   }
 
-  async delete(householdId, userId) {
+  async delete(shoppinglistitemId, userId, householdId) {
     await isAuthorized(userId, householdId)
-    const data = await dbContext.Items.findOneAndDelete({ _id: householdId })
+    const data = await dbContext.Items.findOneAndDelete({ _id: shoppinglistitemId })
     if (!data) {
       throw new BadRequest('Invalid Id')
     }

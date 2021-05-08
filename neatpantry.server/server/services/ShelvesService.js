@@ -8,10 +8,10 @@ class ShelvesService {
     return shelves
   }
 
-  async findByShelfId(query) {
-    const shelves = await dbContext.Shelves.findOne(query)
+  async findByShelfId(id) {
+    const shelves = await dbContext.Shelves.findOne({ _id: id })
     if (!shelves) {
-      throw new BadRequest('Invalid Shelf Id')
+      throw new BadRequest('Invalid')
     }
     return shelves
   }
@@ -30,9 +30,9 @@ class ShelvesService {
     return 'Shelf Successfully Edited'
   }
 
-  async delete(householdId, userId) {
+  async delete(householdId, shelfId, userId) {
     await isAuthorized(userId, householdId)
-    const data = await dbContext.Shelves.findOneAndDelete({ _id: householdId })
+    const data = await dbContext.Shelves.findOneAndDelete({ _id: shelfId })
     if (!data) {
       throw new BadRequest('Invalid Id')
     }

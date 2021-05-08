@@ -29,7 +29,7 @@ export class ShelvesController extends BaseController {
   async getByShelfId(req, res, next) {
     try {
       // TODO authentication and rules
-      const data = await shelvesService.findByShelfId({ householdId: req.params.id })
+      const data = await shelvesService.findByShelfId({ _id: req.params.id })
       return res.send(data)
     } catch (error) {
       next(error)
@@ -39,7 +39,7 @@ export class ShelvesController extends BaseController {
   async getItemsByShelfId(req, res, next) {
     try {
       // TODO authentication and rules
-      const data = await itemsService.findItemByShelfId({ shelfId: req.params.id })
+      const data = await itemsService.findItemsByShelfId({ shelfId: req.params.id })
       return res.send(data)
     } catch (error) {
       next(error)
@@ -70,7 +70,7 @@ export class ShelvesController extends BaseController {
   async delete(req, res, next) {
     try {
       req.body.creatorId = req.userInfo.id
-      const data = await shelvesService.delete(req.params.id, req.userInfo.id)
+      const data = await shelvesService.delete(req.body.householdId, req.params.id, req.userInfo.id)
       res.send(data)
     } catch (error) {
       next(error)

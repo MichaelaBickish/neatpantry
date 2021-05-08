@@ -36,7 +36,7 @@ export class ItemsController extends BaseController {
 
   async delete(req, res, next) {
     try {
-      const data = await itemsService.delete(req.params.id, req.userInfo.id, req.householdId)
+      const data = await itemsService.delete(req.params.id, req.userInfo.id, req.body.householdId)
       res.send(data)
     } catch (error) {
       next(error)

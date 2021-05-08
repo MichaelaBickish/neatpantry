@@ -4,7 +4,7 @@ import { shoppingListItemsService } from '../services/ShoppingListItemsService'
 
 export class ShoppingListItemsController extends BaseController {
   constructor() {
-    super('api/shoppingListItems')
+    super('api/shoppinglistitems')
     this.router
       // NOTE: Beyond this point all routes require Authorization tokens (the user must be logged in)
       .use(Auth0Provider.getAuthorizedUserInfo)
@@ -46,7 +46,7 @@ export class ShoppingListItemsController extends BaseController {
 
   async delete(req, res, next) {
     try {
-      const data = await shoppingListItemsService.delete(req.params.id, req.userInfo.id)
+      const data = await shoppingListItemsService.delete(req.params.id, req.userInfo.id, req.body.householdId)
       res.send(data)
     } catch (error) {
       next(error)
