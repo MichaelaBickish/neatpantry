@@ -23,4 +23,6 @@ AuthService.on(AuthService.AUTH_EVENTS.AUTHENTICATED, async function() {
   AppState.user = AuthService.user
   await accountService.getAccount()
   // NOTE if there is something you want to do once the user is authenticated, place that here
+  // TODO
+  // householdsService.getAll()
 })
