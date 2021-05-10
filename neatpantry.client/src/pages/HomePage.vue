@@ -47,23 +47,27 @@
           </div>
           <div class="modal-body">
             <!--FORM-->
-            <form>
-              <!-- TODO @submit.prevent(createHousehold) -->
+            <form @submit.prevent="createHousehold">
               <div class="form-group">
                 <label for="household-title">Enter Household Name</label>
-                <input type="text" class="form-control" id="household-title" aria-describedby="createhousehold" required>
-                <!-- TODO v-model = "newHousehold.title" -->
+                <input type="text"
+                       class="form-control"
+                       id="household-title"
+                       aria-describedby="createhousehold"
+                       required
+                       v-model="state.newHousehold.title"
+                >
                 <small id="createhousehold" class="form-text text-muted">What would you like your household to be called?</small>
               </div>
+              <div class="modal-footer">
+                <button type="button" class="btn btn-secondary" data-dismiss="modal" title="Close Modal">
+                  Close
+                </button>
+                <button type="submit" class="btn btn-primary" title="Click Here to Create Your New Household">
+                  Submit
+                </button>
+              </div>
             </form>
-          </div>
-          <div class="modal-footer">
-            <button type="button" class="btn btn-secondary" data-dismiss="modal" title="Close Modal">
-              Close
-            </button>
-            <button type="submit" class="btn btn-primary" title="Click Here to Create Your New Household">
-              Submit
-            </button>
           </div>
         </div>
       </div>
@@ -122,9 +126,9 @@
 <script>
 import { reactive } from 'vue'
 // import { AppState } from '../AppState'
-// import { householdsService } from '../services/HouseholdsService'
-// import Notification from '../utils/Notification'
-// import $ from 'jquery'
+import { householdsService } from '../services/HouseholdsService'
+import Notification from '../utils/Notification'
+import $ from 'jquery'
 
 export default {
   name: 'Home',
@@ -133,17 +137,17 @@ export default {
       newHousehold: {}
     })
     return {
-      state
-      // async createHousehold() {
-      //   try {
-      //     await householdsService.createHousehold(state.newHousehold) // NOTE router.push goes in the services part of this function
-      //     state.newHousehold = {}
-      //     $('#createhouseholdmodal').modal('hide')
-      //     Notification.toast('Nice! Your Household Was Created!', 'success')
-      //   } catch (error) {
-      //     Notification.toast('Error: ' + error, 'error')
-      //   }
-      // }
+      state,
+      async createHousehold() {
+        try {
+          await householdsService.createHousehold(state.newHousehold)
+          state.newHousehold = {}
+          $('#createhouseholdmodal').modal('hide')
+          Notification.toast('Nice! Your Household Was Created!', 'success')
+        } catch (error) {
+          Notification.toast('Error: ' + error, 'error')
+        }
+      }
     }
   }
 }
