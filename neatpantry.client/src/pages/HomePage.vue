@@ -121,7 +121,7 @@
       </div>
     </div>
 
-    <div class="row">
+    <!-- <div class="row">
       <div class="col">
         <div class="row">
           <div class="col-md-12 text-center">
@@ -153,6 +153,12 @@
           </div>
         </div>
       </div>
+    </div> -->
+    <div class="row">
+      <!--  v-if="state.households" ?????????????? -->
+      <div class="col">
+        <Households v-for="household in state.households" :key="household.id" :household-prop="household" />
+      </div>
     </div>
   </div>
 </template>
@@ -160,19 +166,30 @@
 <!----------------------------------------------------------------------------------------------->
 
 <script>
-import { reactive, computed } from 'vue'
+import { reactive, computed, onMounted } from 'vue'
 import { AppState } from '../AppState'
 import { householdsService } from '../services/HouseholdsService'
-import Notification from '../utils/Notification'
 import $ from 'jquery'
+import Notification from '../utils/Notification'
+import Households from '../components/HouseholdComponent.vue'
+// import { logger } from '../utils/Logger'
 
 export default {
   name: 'Home',
   setup() {
     const state = reactive({
       user: computed(() => AppState.user),
+      households: computed(() => AppState.households),
       newHousehold: {},
       joinHousehold: {}
+    })
+    onMounted(async() => {
+      try {
+        await householdsService.getAllHouseholds()
+        // logger.log('connected to bandaid') // NOTE what the ACTUAL heck?!!!!!!!!!!!!!! This makes it work for SOME reason?
+      } catch (error) {
+        Notification.toast('Error:' + error, 'error')
+      }
     })
     return {
       state,
@@ -197,6 +214,9 @@ export default {
       //   }
       // }
     }
+  },
+  components: {
+    Households
   }
 }
 </script>

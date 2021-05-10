@@ -8,6 +8,11 @@ class HouseholdsService {
     AppState.households.push(res.data)
     router.push({ name: 'PantryPage', params: { id: res.data.id } })
   }
+
+  async getAllHouseholds() {
+    const res = await api.get('api/households')
+    AppState.households = res.data
+  }
 }
 
 export const householdsService = new HouseholdsService()
