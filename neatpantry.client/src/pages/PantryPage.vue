@@ -1,8 +1,16 @@
 <template>
   <div class="pantry-page container-fluid px-0">
     <div class="row">
-      <button type="button" class="btn btn-outline-dark btn-lg m-3">
-        Add Shelf
+      <button title="Create New Shelf"
+              type="button"
+              class="btn btn-outline-dark btn-lg m-3"
+              data-toggle="modal"
+              data-target="#new-shelf-form"
+      >
+        <!-- v-if="state.user.isAuthenticated" -->
+        <span> Add Shelf
+          <!-- {{ state. }} -->
+        </span>
       </button>
     </div>
     <div class="row">
