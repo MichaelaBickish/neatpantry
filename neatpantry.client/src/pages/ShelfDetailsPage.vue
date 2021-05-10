@@ -1,6 +1,6 @@
 <template>
   <div class="shelf-details-page">
-     <div class="row">
+    <div class="row">
       <button title="Create New Item"
               type="button"
               class="btn btn-outline-dark btn-lg m-3"
@@ -18,6 +18,7 @@
 
 <script>
 import { AppState } from '../AppState'
+import { computed, reactive } from 'vue'
 export default {
   name: 'ShelfDetailsPage',
   setup() {
