@@ -22,12 +22,12 @@ const routes = [
     component: loadPage('AccountPage'),
     beforeEnter: authGuard
   },
-  {
-    path: '/shelves',
-    name: 'PantryPage',
-    component: loadPage('PantryPage'),
-    beforeEnter: authGuard
-  }
+  // {
+  //   path: '/shelves',
+  //   name: 'PantryPage',
+  //   component: loadPage('PantryPage'),
+  //   beforeEnter: authGuard
+  // }
   // {
   //   path: '/:id/shelves',
   //   name: 'PantryPage',
@@ -39,13 +39,13 @@ const routes = [
   //   component: loadPage('ShelfDetailsPage'),
   //   beforeEnter: authGuard
   // }
-  // {
-  //   path: '/households',
-  //   name: 'HouseholdPage',
-  //   component: loadPage('HouseholdPage'),
-  //   // Name of the vue file we're going to
-  //   beforeEnter: authGuard
-  // }
+  {
+    path: '/households/:id',
+    name: 'PantryPage',
+    component: loadPage('PantryPage'),
+    // Name of the vue file we're going to
+    beforeEnter: authGuard
+  }
   // {
   //   path: '/shoppingListItems',
   //   name: 'ShoppingListPage',
