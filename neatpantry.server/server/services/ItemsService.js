@@ -27,11 +27,11 @@ class ItemsService {
   }
 
   async findItemsByShelfId(query = {}) {
-    const shelves = await dbContext.Items.find(query)
-    if (!shelves) {
+    const items = await dbContext.Items.find(query)
+    if (!items) {
       throw new BadRequest('Invalid Shelf Id')
     }
-    return shelves
+    return items
   }
 }
 

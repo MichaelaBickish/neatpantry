@@ -16,6 +16,14 @@ class ShelvesService {
     return shelves
   }
 
+  async findShelvesByHouseholdId(query = {}) {
+    const shelves = await dbContext.Shelves.find(query)
+    if (!shelves) {
+      throw new BadRequest('Invalid Shelf Id')
+    }
+    return shelves
+  }
+
   async create(body, userId) {
     await isAuthorized(userId, body.householdId)
     return await dbContext.Shelves.create(body)
