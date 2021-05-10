@@ -3,6 +3,9 @@
     <Navbar />
   </header>
   <main>
+    <div class="sr-ignore">
+      <AddShelfModalComponent />
+    </div>
     <router-view />
   </main>
 </template>
