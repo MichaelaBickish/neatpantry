@@ -1,6 +1,7 @@
 import BaseController from '../utils/BaseController'
 import { Auth0Provider } from '@bcwdev/auth0provider'
 import { householdsService } from '../services/HouseholdsService'
+import { shelvesService } from '../services/ShelvesService'
 import { makePasscode } from '../utils/GenerateId'
 
 export class HouseholdsController extends BaseController {
@@ -11,6 +12,7 @@ export class HouseholdsController extends BaseController {
       .use(Auth0Provider.getAuthorizedUserInfo)
       .get('', this.getAll)
       .get('/:id', this.getByHouseholdId)
+      .get('/:id/shelves', this.getShelvesByHouseholdId)
       .post('', this.create)
       .put('/:id', this.edit)
       .post('/:id/collaborators', this.joinHousehold)
@@ -21,6 +23,15 @@ export class HouseholdsController extends BaseController {
   async getAll(req, res, next) {
     try {
       const data = await householdsService.findAll({ collaborators: req.userInfo.id })
+      return res.send(data)
+    } catch (error) {
+      next(error)
+    }
+  }
+
+  async getShelvesByHouseholdId(req, res, next) {
+    try {
+      const data = await shelvesService.findShelvesByHouseholdId({ householdId: req.params.id })
       return res.send(data)
     } catch (error) {
       next(error)

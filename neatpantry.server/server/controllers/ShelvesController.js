@@ -9,26 +9,25 @@ export class ShelvesController extends BaseController {
     this.router
       // NOTE: Beyond this point all routes require Authorization tokens (the user must be logged in)
       .use(Auth0Provider.getAuthorizedUserInfo)
-      .get('', this.getAll) // TODO
+      // .get('', this.getAll)
       .get('/:id', this.getByShelfId)
-      .get('/:id/items', this.getItemsByShelfId) // TODO
+      .get('/:id/items', this.getItemsByShelfId)
       .post('', this.create)
       .put('/:id', this.edit)
       .delete('/:id', this.delete)
   }
 
-  async getAll(req, res, next) {
-    try {
-      const data = await shelvesService.find(req.query) // TODO do we need creatorId???
-      return res.send(data)
-    } catch (error) {
-      next(error)
-    }
-  }
+  // async getAll(req, res, next) {
+  //   try {
+  //     const data = await shelvesService.find(req.query)
+  //     return res.send(data)
+  //   } catch (error) {
+  //     next(error)
+  //   }
+  // }
 
   async getByShelfId(req, res, next) {
     try {
-      // TODO authentication and rules
       const data = await shelvesService.findByShelfId({ _id: req.params.id })
       return res.send(data)
     } catch (error) {
