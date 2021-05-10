@@ -39,7 +39,7 @@
             <button type="button" class="btn btn-link btn-outline-dark text-danger" data-dismiss="modal">
               Cancel
             </button>
-            <button type="submit" class="btn btn-success text-dark">
+            <button type="submit" class="btn btn-primary text-dark">
               Add
             </button>
           </div>

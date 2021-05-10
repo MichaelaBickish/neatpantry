@@ -1,5 +1,6 @@
 <template>
   <div class="shelf-component container-fluid">
+    <!-- <router-link :to="{ name: 'ShelfDetailsPage', params:{id:shelf.id} }>-->
     <div class="shelf bg-white shadow">
       <div class="col-md-10 shelf mb-1 mt-1 d-flex align-items-center">
         <span class="shelf-title">
@@ -11,12 +12,19 @@
         <i class="fas fa-chevron-right fa-2x"></i>
       </div>
     </div>
+    <!-- </router-link>  -->
   </div>
 </template>
 
 <script>
 export default {
   name: 'ShelfComponent',
+  props: {
+    shelf: {
+      type: Object,
+      required: true
+    }
+  },
   setup() {
     return {}
   },

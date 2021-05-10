@@ -28,6 +28,45 @@ const routes = [
     component: loadPage('PantryPage'),
     beforeEnter: authGuard
   }
+  // {
+  //   path: '/:id/shelves',
+  //   name: 'PantryPage',
+  //   component: loadPage('PantryPage'),
+  //   beforeEnter: authGuard
+  // }
+  //   path: '/shelves/:id',
+  //   name: 'ShelfDetailsPage',
+  //   component: loadPage('ShelfDetailsPage'),
+  //   beforeEnter: authGuard
+  // }
+  // {
+  //   path: '/households',
+  //   name: 'HouseholdPage',
+  //   component: loadPage('HouseholdPage'),
+  //   // Name of the vue file we're going to
+  //   beforeEnter: authGuard
+  // }
+  // {
+  //   path: '/shoppingListItems',
+  //   name: 'ShoppingListPage',
+  //   component: loadPage('ShoppingListPage'),
+  //   // Name of the vue file we're going to
+  //   beforeEnter: authGuard
+  // }
+  // {
+  //   path: '/account',
+  //   name: 'HouseholdMembersPage',
+  //   component: loadPage('ShoppingListPage'),
+  //   // Name of the vue file we're going to
+  //   beforeEnter: authGuard
+  // }
+  // {
+  //   path: '/account',
+  //   name: 'AccountPage',
+  //   component: loadPage('AccountPage'),
+  //   // Name of the vue file we're going to
+  //   beforeEnter: authGuard
+  // }
 ]
 
 const router = createRouter({
