@@ -1,5 +1,5 @@
 <template>
-  <div class="pantry-page container-fluid px-0">
+  <div class="pantry-page container-fluid px-0" v-if="state.activeHousehold">
     <div class="row">
       <button title="Create New Shelf"
               type="button"
@@ -13,8 +13,11 @@
         </span>
       </button>
     </div>
+    <div>
+      {{ state.activeHousehold.title }}
+    </div>
     <div class="row">
-      <ShelfComponent />
+      <ShelfComponent v-for="shelf in state.shelves" :key="shelf.id" :shelf="shelf" />
     </div>
     <!-- <footer> -->
     <div class="row fixed-bottom">
@@ -33,6 +36,7 @@ import { reactive, onMounted, computed } from 'vue'
 import { AppState } from '../AppState'
 import { shelvesService } from '../services/ShelvesService'
 import { useRoute } from 'vue-router'
+import Notification from '../utils/Notification'
 export default {
   name: 'PantryPage',
   setup() {
@@ -45,8 +49,8 @@ export default {
     })
     onMounted(async() => {
       try {
-        await shelvesService.activeHousehold()
-        await shelvesService.getShelvesByHouseholdId()
+        await shelvesService.activeHousehold(route.params.id)
+        await shelvesService.getShelvesByHouseholdId(route.params.id)
       } catch (error) {
         Notification.toast('Error: ' + error, 'error')
       }
