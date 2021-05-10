@@ -9,7 +9,7 @@
       >
         <!-- v-if="state.user.isAuthenticated" -->
         <span> Add Shelf
-          <!-- {{ state. }} -->
+          {{ state.shelves.title }}
         </span>
       </button>
     </div>
@@ -29,10 +29,33 @@
 </template>
 
 <script>
+import { reactive, onMounted, computed } from 'vue'
+import { AppState } from '../AppState'
+import { shelvesService } from '../services/ShelvesService'
+import { useRoute } from 'vue-router'
 export default {
   name: 'PantryPage',
   setup() {
-    return {}
+    const route = useRoute()
+    const state = reactive({
+      activeHousehold: computed(() => AppState.activeHousehold),
+      shelves: computed(() => AppState.shelves),
+      account: computed(() => AppState.account),
+      user: computed(() => AppState.user)
+    })
+    onMounted(async() => {
+      try {
+        await shelvesService.activeHousehold()
+        await shelvesService.getShelvesByHouseholdId()
+      } catch (error) {
+        Notification.toast('Error: ' + error, 'error')
+      }
+    })
+    return {
+      route,
+      state
+
+    }
   },
   components: {}
 }
