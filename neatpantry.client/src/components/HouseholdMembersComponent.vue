@@ -12,7 +12,7 @@
             <!-- Household member email -->
           </p>
           <button type="button" class="btn btn-primary">
-            <!-- @click="deleteCollaborator(housholdMemberProp.id)" -->
+            <!-- @click="deleteCollaborator(householdMemberProp.id)" -->
             Remove
           </button>
         </div>
@@ -27,7 +27,7 @@
 export default {
   name: 'HouseholdMember',
   props: {
-    housholdMemberProp: {
+    householdMemberProp: {
       type: Object,
       required: true
     }
@@ -39,7 +39,7 @@ export default {
       //   try {
       //     if (await Notification.confirmAction('Are you sure you want to remove this member?')) {
       //       await householdsService.deleteCollaborator(id) NOTE is this the right place for this???
-      //       await householdsService.getAllHouseholdMembers(props.housholdMemberProp.bug)
+      //       await householdsService.getAllHouseholdMembers(props.householdMemberProp.bug)
       //       Notification.toast('Note Deleted', 'success')
       //     }
       //   } catch (error) {

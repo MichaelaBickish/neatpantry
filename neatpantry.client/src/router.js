@@ -45,6 +45,13 @@ const routes = [
     component: loadPage('PantryPage'),
     // Name of the vue file we're going to
     beforeEnter: authGuard
+  },
+  {
+    path: '/householdsmain/:id',
+    name: 'HouseholdsPage',
+    component: loadPage('HouseholdsPage'),
+    // Name of the vue file we're going to
+    beforeEnter: authGuard
   }
   // {
   //   path: '/shoppingListItems',
