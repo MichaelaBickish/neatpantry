@@ -12,6 +12,7 @@
             <p class="card-text">
               Lorem ipsum dolor sit amet, consectetur adipisicing elit. Dolorum omnis qui sint aliquam beatae quibusdam accusamus,
             </p><div class="row">
+              <!-- TODO remove v-if they are already logged in, if not fire the log in confirm action -->
               <div class="col border-right justify-content-end d-flex ml-5">
                 <!-- Button trigger modal for create a household -->
                 <button type="button" class="btn btn-primary btn-block" data-toggle="modal" data-target="#createhouseholdmodal" title="Create A New Household">

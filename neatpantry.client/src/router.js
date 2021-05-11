@@ -47,6 +47,7 @@ const routes = [
     beforeEnter: authGuard
   },
   {
+    // FIXME review file path to reduce to path '/households'
     path: '/householdsmain/:id',
     name: 'HouseholdsPage',
     component: loadPage('HouseholdsPage'),
@@ -54,6 +55,7 @@ const routes = [
     beforeEnter: authGuard
   },
   {
+    // FIXME household/:id/shoppinglist
     path: '/:id/shoppingList',
     name: 'HouseholdShoppingListPage',
     component: loadPage('HouseholdShoppingListPage'),
@@ -61,7 +63,7 @@ const routes = [
     beforeEnter: authGuard
   },
   {
-    path: '/households/:id',
+    path: '/households/:id/members',
     name: 'HouseholdMembersPage',
     component: loadPage('HouseholdMembersPage'),
     // Name of the vue file we're going to
