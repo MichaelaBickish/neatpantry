@@ -39,17 +39,28 @@
           <div class="col">
             <div class="collapse" id="collapseExample">
               <div class="card card-body shadow-sm">
-                <form>
-                  <!-- @submit.prevent="editProfile" -->
+                <form @submit.prevent="editProfile">
                   <div class="form-group">
                     <label for="profileNameEdit">Update Profile Name</label>
-                    <input type="text" class="form-control" id="profileNameEdit" aria-describedby="profileNameEdit" placeholder="enter new name">
-                    <!-- v-model="profileEdit.name" -->
+                    <input type="text"
+                           class="form-control"
+                           id="profileNameEdit"
+                           aria-describedby="profileNameEdit"
+                           placeholder="enter new name"
+                           required
+                           v-model="state.profileEdits.name"
+                    >
                   </div>
                   <div class="form-group">
                     <label for="profilePictureEdit">Update Profile Picture</label>
-                    <input type="text" class="form-control" id="profilePictureEdit" aria-describedby="profilePictureEdit" placeholder="paste image URL">
-                    <!-- v-model="profileEdit.picture" -->
+                    <input type="text"
+                           class="form-control"
+                           id="profilePictureEdit"
+                           aria-describedby="profilePictureEdit"
+                           placeholder="paste image URL"
+                           required
+                           v-model="state.profileEdits.picture"
+                    >
                   </div>
                   <button type="submit" class="btn btn-secondary btn-block mt-2">
                     Update Profile
@@ -69,29 +80,29 @@
 <script>
 import { reactive, computed } from 'vue'
 import { AppState } from '../AppState'
-// import Notification from '../utils/Notification'
+import { accountService } from '../services/AccountService'
+import Notification from '../utils/Notification'
 
 export default {
   name: 'Account',
   setup() {
     const state = reactive({
       account: computed(() => AppState.account),
-      profileEdit: {}
+      user: computed(() => AppState.user),
+      profileEdits: {}
     })
     return {
-      state
+      state,
 
-      // TODO
-      // async editProfile() {
-      //   try {
-      //     await NOTE accountService.editBug(state.profileEdits, WHAT id GOES HERE?)
-      //     state.profileEdits = {}
-      //     Notification.toast('All Done!', 'success')
-      //   } catch (error) {
-      //     Notification.toast('Error: ' + error, 'error')
-      //   }
-      // }
-
+      async editProfile() {
+        try {
+          await accountService.edit(state.profileEdits, state.account.id)
+          state.newBoardName = {}
+          Notification.toast('Board Updated!', 'success')
+        } catch (error) {
+          Notification.toast('Error: ' + error, 'error')
+        }
+      }
     }
   }
 }
