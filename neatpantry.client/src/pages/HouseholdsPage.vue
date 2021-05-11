@@ -7,7 +7,7 @@
         <div class="card text-center shadow-sm">
           <div class="card-body">
             <h1 class="card-title">
-              This is the HOME PAGE
+              {{ state.user.isAuthenticated ? "You're logged in" : "You're not logged in" }}
             </h1>
             <p class="card-text">
               Lorem ipsum dolor sit amet, consectetur adipisicing elit. Dolorum omnis qui sint aliquam beatae quibusdam accusamus,
@@ -157,11 +157,7 @@
     <div class="row">
       <!--  v-if="state.households" ?????????????? -->
       <div class="col">
-        <router-link :to="{ name: 'HouseholdsPage', params: {id: state.account.id} }" class="">
-          <span>
-            go to households page
-          </span>
-        </router-link>
+        <Households v-for="household in state.households" :key="household.id" :household-prop="household" />
       </div>
     </div>
   </div>
@@ -170,11 +166,12 @@
 <!----------------------------------------------------------------------------------------------->
 
 <script>
-import { reactive, computed } from 'vue'
+import { reactive, computed, onMounted } from 'vue'
 import { AppState } from '../AppState'
 import { householdsService } from '../services/HouseholdsService'
 import $ from 'jquery'
 import Notification from '../utils/Notification'
+import Households from '../components/HouseholdComponent.vue'
 // import { logger } from '../utils/Logger'
 
 export default {
@@ -182,18 +179,18 @@ export default {
   setup() {
     const state = reactive({
       user: computed(() => AppState.user),
-      account: computed(() => AppState.account),
       households: computed(() => AppState.households),
       newHousehold: {},
       joinHousehold: {}
     })
-    // onMounted(async() => {
-    //   try {
-    //     await householdsService.getAllHouseholds()
-    //   } catch (error) {
-    //     Notification.toast('Error:' + error, 'error')
-    //   }
-    // })
+    onMounted(async() => {
+      try {
+        await householdsService.getAllHouseholds()
+        // logger.log('connected to bandaid') // NOTE what the ACTUAL heck?!!!!!!!!!!!!!! This makes it work for SOME reason?
+      } catch (error) {
+        Notification.toast('Error:' + error, 'error')
+      }
+    })
     return {
       state,
       async createHousehold() {
@@ -219,7 +216,7 @@ export default {
     }
   },
   components: {
-
+    Households
   }
 }
 </script>

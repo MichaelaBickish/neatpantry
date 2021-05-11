@@ -12,11 +12,11 @@
           <button type="button" class="btn btn-primary">
             Remove
           </button>
-          <!-- <router-link :to="{name: 'PantryPage', params: {id: householdProp.id}}">
+          <router-link :to="{name: 'PantryPage', params: {id: householdProp.id}}">
             <span>
               Go To
             </span>
-          </router-link> -->
+          </router-link>
         </div>
       </div>
     </div>
