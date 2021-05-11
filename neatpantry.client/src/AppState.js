@@ -6,5 +6,7 @@ export const AppState = reactive({
   account: {},
   households: [],
   activeHousehold: null,
-  shelves: []
+  shelves: [],
+  activeShelf: null,
+  items: []
 })
