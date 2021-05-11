@@ -52,28 +52,28 @@ const routes = [
     component: loadPage('HouseholdsPage'),
     // Name of the vue file we're going to
     beforeEnter: authGuard
+  },
+  {
+    path: '/:id/shoppingList',
+    name: 'HouseholdShoppingListPage',
+    component: loadPage('HouseholdShoppingListPage'),
+    // Name of the vue file we're going to
+    beforeEnter: authGuard
+  },
+  {
+    path: '/households/:id',
+    name: 'HouseholdMembersPage',
+    component: loadPage('HouseholdMembersPage'),
+    // Name of the vue file we're going to
+    beforeEnter: authGuard
+  },
+  {
+    path: '/account',
+    name: 'Account',
+    component: loadPage('AccountPage'),
+    // Name of the vue file we're going to
+    beforeEnter: authGuard
   }
-  // {
-  //   path: '/shoppingListItems',
-  //   name: 'ShoppingListPage',
-  //   component: loadPage('ShoppingListPage'),
-  //   // Name of the vue file we're going to
-  //   beforeEnter: authGuard
-  // }
-  // {
-  //   path: '/account',
-  //   name: 'HouseholdMembersPage',
-  //   component: loadPage('ShoppingListPage'),
-  //   // Name of the vue file we're going to
-  //   beforeEnter: authGuard
-  // }
-  // {
-  //   path: '/account',
-  //   name: 'AccountPage',
-  //   component: loadPage('AccountPage'),
-  //   // Name of the vue file we're going to
-  //   beforeEnter: authGuard
-  // }
 ]
 
 const router = createRouter({
