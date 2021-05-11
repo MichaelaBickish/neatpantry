@@ -34,11 +34,12 @@ const routes = [
   //   component: loadPage('PantryPage'),
   //   beforeEnter: authGuard
   // }
-  //   path: '/shelves/:id',
-  //   name: 'ShelfDetailsPage',
-  //   component: loadPage('ShelfDetailsPage'),
-  //   beforeEnter: authGuard
-  // }
+  {
+    path: '/shelves/:id',
+    name: 'ShelfDetailsPage',
+    component: loadPage('ShelfDetailsPage'),
+    beforeEnter: authGuard
+  },
   {
     path: '/households/:id',
     name: 'PantryPage',

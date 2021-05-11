@@ -23,6 +23,7 @@
     <div class="row">
       <ShelfComponent v-for="shelf in state.shelves" :key="shelf.id" :shelf="shelf" />
     </div>
+    <!-- TODO Make sure this content doesnt bleed into the footer w the icons -->
     <!-- <footer> -->
     <div class="row fixed-bottom">
       <div class="col-md-12 d-flex justify-content-around text-info mb-2">

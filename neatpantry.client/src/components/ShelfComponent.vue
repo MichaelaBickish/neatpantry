@@ -1,18 +1,19 @@
 <template>
-  <div class="shelf-component container-fluid">
-    <!-- <router-link :to="{ name: 'ShelfDetailsPage', params:{id:shelf.id} }>-->
-    <div class="shelf bg-white shadow">
-      <div class="col-md-10 shelf mb-1 mt-1 d-flex align-items-center">
-        <span class="shelf-title">
-          shelf
-        <!-- {{ prop.title }} -->
-        </span>
+  <div class="shelf-component container-fluid my-2">
+    <router-link :to="{name: 'ShelfDetailsPage', params:{_id: shelf.id}}">
+      <div
+        class="shelf bg-white shadow"
+      >
+        <div class="col-md-10 shelf mb-1 mt-1 d-flex align-items-center">
+          <span class="shelf-title">
+            {{ shelf.title }}
+          </span>
+        </div>
+        <div class="col-2 d-flex flex-end align-items-center justify-content-end">
+          <i class="fas fa-chevron-right fa-2x"></i>
+        </div>
       </div>
-      <div class="col-2 d-flex flex-end align-items-center justify-content-end">
-        <i class="fas fa-chevron-right fa-2x"></i>
-      </div>
-    </div>
-    <!-- </router-link>  -->
+    </router-link>
   </div>
 </template>
 

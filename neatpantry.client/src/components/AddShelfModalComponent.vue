@@ -55,9 +55,11 @@ import { AppState } from '../AppState'
 import { shelvesService } from '../services/ShelvesService'
 import $ from 'jquery'
 import Notification from '../utils/Notification'
+import { useRoute } from 'vue-router'
 export default {
   name: 'AddShelfModalComponent',
   setup() {
+    const route = useRoute()
     const state = reactive({
       newShelf: {},
       shelves: computed(() => AppState.shelves)
@@ -66,6 +68,7 @@ export default {
       state,
       async createShelf() {
         try {
+          state.newShelf.householdId = route.params.id
           await shelvesService.createShelf(state.newShelf)
           state.newShelf = {}
           $('#new-shelf-form').modal('hide')
