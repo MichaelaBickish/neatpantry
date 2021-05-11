@@ -12,6 +12,7 @@
           {{ state.items.title }}
         </span>
       </button>
+      <AddItemModalComponent v-for="item in state.items" :key="item.id" :item="item" :shelf="shelf" />
     </div>
   </div>
 </template>
@@ -33,6 +34,8 @@ export default {
 }
 </script>
 
-<style lang="scss" scoped>
-
+<style lang="
+                             scss"
+                             scoped
+      >
 </style>

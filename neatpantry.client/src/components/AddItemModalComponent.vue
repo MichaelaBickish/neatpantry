@@ -10,7 +10,7 @@
       <div class="modal-content">
         <div class="modal-header bg-primary">
           <h5 class="modal-title" id="exampleModalLabel">
-            Create a Shelf
+            Create a Item
           </h5>
           <button type="button" class="close" data-dismiss="modal" aria-label="Close">
             <span aria-hidden="true">&times;</span>
@@ -35,21 +35,30 @@
               >
               <div class="AutoAddCheckbox text-right mr-5">
                 <input class="action m-2"
+                       v-if="state.autoAdd === false"
                        type="checkbox"
                        id="AutoAdd"
                        name="AutoAdd"
                        title="Click to Auto Add Item"
                        @click="autoAdd"
                 >
-
-                <span class="notification "> Auto Add</span><br>
+                <input type="text"
+                       v-else
+                       placeholder="set threshold"
+                       title="Auto Add threshold"
+                       id="threshold"
+                >
+                <span
+                  class="recieveNotification "
+                >
+                  Auto Add</span><br>
                 <!-- need @click="sortClosed" -->
               </div>
-              <div class="closedCheckbox text-right mr-5">
+              <div class="recieveNotification text-right mr-5">
                 <input class="action m-2"
                        type="checkbox"
-                       id="notification"
-                       name="notification"
+                       id="recieveNotification"
+                       name="recieveNotification"
                        title="Click to Recieve Notification"
                        @click="getANotification"
                 >
@@ -95,6 +104,10 @@ export default {
     item: {
       type: Object,
       required: true
+    },
+    shelf: {
+      type: Object,
+      required: true
     }
   },
   setup(props) {
@@ -102,7 +115,8 @@ export default {
       newItem: {},
       // newNote: {},
       shelves: computed(() => AppState.shelves),
-      items: computed(() => AppState.items)
+      items: computed(() => AppState.items),
+      autoAdd: false
     })
     return {
       state,
@@ -126,6 +140,13 @@ export default {
       //   state.newNote = {}
       // } catch (error) {
       //   Notification.toast('Error: ' + error, 'error')
+      // }
+      // async autoAdd() {
+      //   try {
+      //     await itemsService.addItem()
+      //   } catch (error) {
+
+      //   }
       // }
     }
   },

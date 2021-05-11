@@ -34,7 +34,7 @@
           </router-link>
         </li>
         <!-- <li class="nav-item">
-          <router-link :to="{ name: 'PantryPage' }" class="nav-link">
+          <router-link :to="{ name: 'PantryPage'}" class="nav-link">
             Pantry Page
           </router-link>
         </li> -->
