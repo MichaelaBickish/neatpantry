@@ -6,7 +6,7 @@ const Household = new Schema(
   {
     title: { type: String, required: true },
     creatorId: { type: String, ref: 'Account', required: true },
-    collaborators: [{ type: String }],
+    collaborators: [{ type: String, ref: 'Account' }],
     passcode: { type: String, default: makePasscode() }
   },
   { timestamps: true, toJSON: { virtuals: true } }

@@ -4,7 +4,7 @@
       <div class="card w-75">
         <div class="card-body">
           <h5 class="card-title">
-            Card title
+            NAME {{ cProp.name }}
             <!-- Household member profile name and profile picture -->
           </h5>
           <p class="card-text">
@@ -27,7 +27,7 @@
 export default {
   name: 'HouseholdMember',
   props: {
-    householdMemberProp: {
+    cProp: {
       type: Object,
       required: true
     }
