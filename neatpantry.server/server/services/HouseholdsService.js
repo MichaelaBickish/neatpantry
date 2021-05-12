@@ -7,7 +7,7 @@ class HouseholdsService {
   }
 
   async findById(id) {
-    const household = await dbContext.Households.findOne({ _id: id })
+    const household = await dbContext.Households.findOne({ _id: id }).populate('collaboratorsProfiles', 'name picture')
     if (!household) {
       throw new BadRequest('Invalid Household Id')
     }
