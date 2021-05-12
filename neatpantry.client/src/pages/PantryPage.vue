@@ -20,25 +20,29 @@
         </button>
       </div>
     </div>
-    <div class="row ">
-      <ShelfComponent v-for="shelf in state.shelves" :key="shelf.id" :shelf="shelf" />
-    </div>
-    <!-- TODO Make sure this content doesnt bleed into the footer w the icons -->
-    <!-- <footer> -->
-    <div class="row footer mt-2">
-      <div class="col-md-12 d-flex justify-content-around text-info mb-2">
-        <router-link :to="{ name: 'HouseholdMembersPage', params: state.households.id }">
-          <i class="fas fa-home fa-3x" title="Household Members"></i>
-        </router-link>
-        <router-link :to="{ name: 'HouseholdShoppingListPage', params: state.households.id}">
-          <i class="fas fa-clipboard-list fa-3x" title="Household Shopping List"></i>
-        </router-link>
-        <router-link :to="{ name: 'Account'}">
-          <i class="fas fa-user-alt fa-3x" title="Personal Account Info"></i>
-        </router-link>
+    <div class="row flex-grow-1">
+      <div class="col-12">
+        <div class="row">
+          <ShelfComponent v-for="shelf in state.shelves" :key="shelf.id" :shelf="shelf" />
+        </div>
       </div>
     </div>
-    <!-- </footer> -->
+    <!-- TODO Make sure this content doesnt bleed into the footer w the icons -->
+    <footer>
+      <div class="row footer mt-2">
+        <div class="col-md-12 d-flex justify-content-around text-info mb-2">
+          <router-link :to="{ name: 'HouseholdMembersPage', params: state.households.id }">
+            <i class="fas fa-home fa-3x" title="Household Members"></i>
+          </router-link>
+          <router-link :to="{ name: 'HouseholdShoppingListPage', params: state.households.id}">
+            <i class="fas fa-clipboard-list fa-3x" title="Household Shopping List"></i>
+          </router-link>
+          <router-link :to="{ name: 'Account'}">
+            <i class="fas fa-user-alt fa-3x" title="Personal Account Info"></i>
+          </router-link>
+        </div>
+      </div>
+    </footer>
   </div>
 </template>
 
@@ -79,7 +83,10 @@ export default {
 
 <style lang="scss" scoped>
 .pantry-page{
-  max-height: 80vh;
+  min-height: 80vh;
+  display: flex;
+  flex-direction: column;
+  // max-height: 80vh;
 }
 
 </style>

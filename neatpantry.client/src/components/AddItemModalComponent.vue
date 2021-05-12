@@ -33,25 +33,37 @@
                      v-model="state.newItem.title"
                      required
               >
+              <label for="quantity">Quantity</label>
+              <input type="number"
+                     class="form-control"
+                     id="quantity"
+                     placeholder="quantity..."
+                     min="0"
+
+                     v-model="state.newItem.quantity"
+                     required
+              >
               <div class="AutoAddCheckbox text-right mr-5">
                 <input class="action m-2"
-                       v-if="state.autoAdd === false"
                        type="checkbox"
                        id="AutoAdd"
                        name="AutoAdd"
                        title="Click to Auto Add Item"
-                       @click="autoAdd"
-                >
-                <input type="text"
-                       v-else
-                       placeholder="set threshold"
-                       title="Auto Add threshold"
-                       id="threshold"
+                       @click="state.autoAdd = !state.autoAdd"
                 >
                 <span
-                  class="recieveNotification "
+                  class="setThreshhold "
                 >
-                  Auto Add</span><br>
+                  Auto Add Item</span>
+                <!-- @click="setToAutoAdd" -->
+                <div>
+                  <input type="text"
+                         v-if="state.autoAdd"
+                         placeholder="set threshold"
+                         title="Auto Add threshold"
+                         id="threshold"
+                  >
+                </div>
                 <!-- need @click="sortClosed" -->
               </div>
               <div class="recieveNotification text-right mr-5">

@@ -1,4 +1,5 @@
 import { AppState } from '../AppState'
+import router from '../router'
 import { api } from './AxiosService'
 class ShelvesService {
   async createShelf(body) {
@@ -18,6 +19,14 @@ class ShelvesService {
     const res = await api.get(`api/households/${id}/shelves`)
     // logger.log(res.data)
     AppState.shelves = res.data
+  }
+
+  async deleteShelf(activeShelf) {
+    const householdId = activeShelf.householdId
+    await api.delete('api/shelves/' + activeShelf.id)
+    router.push({ name: 'PantryPage', params: { id: householdId } })
+    this.getShelvesByHouseholdId(activeShelf.householdId)
+    // AppState.shelves = AppState.shelves.filter(s => s.id !== activeShelf.id)
   }
 }
 

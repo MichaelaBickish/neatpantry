@@ -38,8 +38,10 @@ class ShelvesService {
     return 'Shelf Successfully Edited'
   }
 
-  async delete(householdId, shelfId, userId) {
-    await isAuthorized(userId, householdId)
+  async delete(shelfId, userId) {
+    const shelf = await this.findByShelfId(shelfId)
+    await isAuthorized(userId, shelf.householdId)
+
     const data = await dbContext.Shelves.findOneAndDelete({ _id: shelfId })
     if (!data) {
       throw new BadRequest('Invalid Id')

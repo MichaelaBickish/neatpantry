@@ -1,17 +1,13 @@
 <template>
-  <div class="shelf-component container-fluid my-2">
-    <router-link :to="{name: 'ShelfDetailsPage', params:{id: shelf.id}}">
-      <div
-        class="shelf bg-white shadow"
-      >
-        <div class="col-md-10 shelf mb-1 mt-1 d-flex align-items-center">
-          <span class="shelf-title">
-            {{ shelf.title }}
-          </span>
-        </div>
-        <div class="col-2 d-flex flex-end align-items-center justify-content-end">
-          <i class="fas fa-chevron-right fa-2x"></i>
-        </div>
+  <div class="shelf-component col-12 my-2">
+    <router-link class="row shelf bg-white shadow" :to="{name: 'ShelfDetailsPage', params:{id: shelf.id}}">
+      <div class="col-md-10 shelf mb-1 mt-1 d-flex align-items-center pl-4">
+        <span class="shelf-title">
+          {{ shelf.title }}
+        </span>
+      </div>
+      <div class="col-2 d-flex flex-end align-items-center  pr-4 justify-content-end">
+        <i class="fas fa-chevron-right fa-2x"></i>
       </div>
     </router-link>
   </div>
@@ -37,7 +33,6 @@ export default {
 .shelf{
   min-height: 4rem;
     display: flex;
-  width: 100%;
 }
 .shelf-title{
   font-size: 1.5rem;

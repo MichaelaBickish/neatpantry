@@ -24,7 +24,7 @@
       </div>
     </div>
     <div class="row">
-      <button type="button" class="btn btn-outline-dark text-danger m-4">
+      <button type="button" class="btn btn-outline-dark text-danger m-4" @click="deleteShelf(state.activeShelf)">
         Delete Shelf
       </button>
     </div>
@@ -35,7 +35,9 @@
 import { AppState } from '../AppState'
 import { computed, reactive, onMounted } from 'vue'
 import { itemsService } from '../services/ItemsService'
+import { shelvesService } from '../services/ShelvesService'
 import { useRoute } from 'vue-router'
+import Notification from '../utils/Notification'
 export default {
   name: 'ShelfDetailsPage',
   setup() {
@@ -54,7 +56,18 @@ export default {
     })
     return {
       state,
-      route
+      route,
+
+      async deleteShelf() {
+        try {
+          // state.activeShelf.householdId = state.activeShelf
+          if (await Notification.confirmAction()) {
+            await shelvesService.deleteShelf(state.activeShelf)
+          }
+        } catch (error) {
+          Notification.toast('Error: ' + error, 'error')
+        }
+      }
     }
   },
   components: {}
