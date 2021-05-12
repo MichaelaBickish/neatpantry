@@ -40,23 +40,21 @@ const routes = [
   //   beforeEnter: authGuard
   // }
   {
-    path: '/households/:id',
+    path: '/pantrypage/:id',
     name: 'PantryPage',
     component: loadPage('PantryPage'),
     // Name of the vue file we're going to
     beforeEnter: authGuard
   },
   {
-    // FIXME review file path to reduce to path '/households'
-    path: '/householdsmain/:id',
+    path: '/households/',
     name: 'HouseholdsPage',
     component: loadPage('HouseholdsPage'),
     // Name of the vue file we're going to
     beforeEnter: authGuard
   },
   {
-    // FIXME household/:id/shoppinglist
-    path: '/:id/shoppingList',
+    path: 'household/:id/shoppingList',
     name: 'HouseholdShoppingListPage',
     component: loadPage('HouseholdShoppingListPage'),
     // Name of the vue file we're going to
