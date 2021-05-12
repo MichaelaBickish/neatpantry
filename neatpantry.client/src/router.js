@@ -48,14 +48,14 @@ const routes = [
     beforeEnter: authGuard
   },
   {
-    path: '/households/',
+    path: '/households',
     name: 'HouseholdsPage',
     component: loadPage('HouseholdsPage'),
     // Name of the vue file we're going to
     beforeEnter: authGuard
   },
   {
-    path: 'household/:id/shoppingList',
+    path: '/households/:id/shoppingList',
     name: 'HouseholdShoppingListPage',
     component: loadPage('HouseholdShoppingListPage'),
     // Name of the vue file we're going to
