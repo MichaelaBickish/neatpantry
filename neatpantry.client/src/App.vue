@@ -5,6 +5,7 @@
   <main>
     <div class="sr-ignore">
       <AddShelfModalComponent />
+      <AddItemModalComponent />
     </div>
     <router-view />
   </main>

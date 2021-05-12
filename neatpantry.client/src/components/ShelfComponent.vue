@@ -1,6 +1,6 @@
 <template>
   <div class="shelf-component container-fluid my-2">
-    <router-link :to="{name: 'ShelfDetailsPage', params:{_id: shelf.id}}">
+    <router-link :to="{name: 'ShelfDetailsPage', params:{id: shelf.id}}">
       <div
         class="shelf bg-white shadow"
       >
