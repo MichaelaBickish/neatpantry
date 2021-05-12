@@ -18,7 +18,15 @@
         </div>
         <div id="collapseOne" class="collapse show" aria-labelledby="headingOne" data-parent="#accordionExample">
           <div class="card-body">
-            Some placeholder content for the first accordion panel. This panel is shown by default, thanks to the <code>.show</code> class.
+            <span> Quantity: {{ item.quantity }} </span>
+            <row class="editItem ">
+              <div class="col d-flex align-items-end justify-content-end">
+                //TODO Edit Item function modal
+                <button type="button" class="btn btn-outline-primary">
+                  Edit Item
+                </button>
+              </div>
+            </row>
           </div>
         </div>
       </div>

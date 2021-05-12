@@ -1,7 +1,7 @@
-import BaseController from '../utils/BaseController'
 import { Auth0Provider } from '@bcwdev/auth0provider'
-import { shelvesService } from '../services/ShelvesService'
 import { itemsService } from '../services/ItemsService'
+import { shelvesService } from '../services/ShelvesService'
+import BaseController from '../utils/BaseController'
 
 export class ShelvesController extends BaseController {
   constructor() {
@@ -69,7 +69,8 @@ export class ShelvesController extends BaseController {
   async delete(req, res, next) {
     try {
       req.body.creatorId = req.userInfo.id
-      const data = await shelvesService.delete(req.body.householdId, req.params.id, req.userInfo.id)
+
+      const data = await shelvesService.delete(req.params.id, req.userInfo.id)
       res.send(data)
     } catch (error) {
       next(error)

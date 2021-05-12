@@ -19,6 +19,14 @@ class ShelvesService {
     // logger.log(res.data)
     AppState.shelves = res.data
   }
+
+  async deleteShelf(activeShelf) {
+    debugger
+    await api.delete('api/shelves/' + activeShelf.id)
+    this.getShelvesByHouseholdId(activeShelf.householdId)
+
+    // AppState.shelves = AppState.shelves.filter(s => s.id !== activeShelf.id)
+  }
 }
 
 export const shelvesService = new ShelvesService()
