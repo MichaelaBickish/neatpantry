@@ -1,5 +1,5 @@
 <template>
-  <div class="pantry-page container-fluid px-0" v-if="state.activeHousehold">
+  <div class="pantry-page container-fluid px-0 " v-if="state.activeHousehold">
     <div class="row">
       <div class="col-md-12">
         <h1>
@@ -20,12 +20,12 @@
         </button>
       </div>
     </div>
-    <div class="row">
+    <div class="row ">
       <ShelfComponent v-for="shelf in state.shelves" :key="shelf.id" :shelf="shelf" />
     </div>
     <!-- TODO Make sure this content doesnt bleed into the footer w the icons -->
     <!-- <footer> -->
-    <div class="row fixed-bottom">
+    <div class="row footer mt-2">
       <div class="col-md-12 d-flex justify-content-around text-info mb-2">
         <router-link :to="{ name: 'HouseholdMembersPage', params: state.households.id }">
           <i class="fas fa-home fa-3x" title="Household Members"></i>
@@ -78,5 +78,8 @@ export default {
 </script>
 
 <style lang="scss" scoped>
+.pantry-page{
+  max-height: 80vh;
+}
 
 </style>

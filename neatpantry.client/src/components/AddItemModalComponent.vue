@@ -98,23 +98,16 @@ import { AppState } from '../AppState'
 import { itemsService } from '../services/ItemsService'
 import $ from 'jquery'
 import Notification from '../utils/Notification'
+import { useRoute } from 'vue-router'
 export default {
   name: 'AddItemModalComponent',
-  props: {
-    item: {
-      type: Object,
-      required: true
-    },
-    shelf: {
-      type: Object,
-      required: true
-    }
-  },
-  setup(props) {
+  setup() {
+    const route = useRoute()
     const state = reactive({
-      newItem: {},
+      newItem: { },
       // newNote: {},
       shelves: computed(() => AppState.shelves),
+      activeShelf: computed(() => AppState.activeShelf),
       items: computed(() => AppState.items),
       autoAdd: false
     })
@@ -122,8 +115,10 @@ export default {
       state,
       async createItem() {
         try {
+          state.newItem.shelfId = route.params.id
+          state.newItem.householdId = state.activeShelf.householdId
           await itemsService.createItem(state.newItem)
-          state.newShelf = {}
+          state.newItem = {}
           $('#new-item-form').modal('hide')
           Notification.toast('Shelf Successfully Created!', 'success')
         } catch (error) {

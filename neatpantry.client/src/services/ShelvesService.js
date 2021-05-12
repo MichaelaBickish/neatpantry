@@ -1,18 +1,17 @@
 import { AppState } from '../AppState'
-import { logger } from '../utils/Logger'
 import { api } from './AxiosService'
 class ShelvesService {
   async createShelf(body) {
-    const res = await api.post('api/shelves', body)
-    logger.log(res.data)
+    await api.post('api/shelves', body)
+    // logger.log(res.data)
     // router.push({ name: 'ShelfDetailsPage', params: { id: res.data.id } })
-    this.getShelvesByHouseholdId()
+    this.getShelvesByHouseholdId(body.householdId)
   }
 
   async activeHousehold(householdId) {
     const res = await api.get('api/households/' + householdId)
     AppState.activeHousehold = res.data
-    logger.log(res.data)
+    // logger.log(res.data)
   }
 
   async getShelvesByHouseholdId(id) {
