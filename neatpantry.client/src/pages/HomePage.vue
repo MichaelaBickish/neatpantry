@@ -7,7 +7,7 @@
         <div class="card text-center shadow-sm">
           <div class="card-body">
             <h1 class="card-title">
-              This is the HOME PAGE
+              Landing Page
             </h1>
             <p class="card-text">
               Lorem ipsum dolor sit amet, consectetur adipisicing elit. Dolorum omnis qui sint aliquam beatae quibusdam accusamus,

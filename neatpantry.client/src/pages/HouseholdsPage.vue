@@ -94,8 +94,7 @@
           </div>
           <div class="modal-body">
             <!--FORM-->
-            <form>
-              <!--  @submit.prevent="joinHousehold" -->
+            <form @submit.prevent="joinHousehold">
               <div class="form-group">
                 <label for="household-title">Enter Household Passcode</label>
                 <input type="text"
@@ -202,17 +201,17 @@ export default {
         } catch (error) {
           Notification.toast('Error: ' + error, 'error')
         }
+      },
+      async joinHousehold() {
+        try {
+          await householdsService.joinHousehold(state.joinHousehold.passcode)
+          state.joinHousehold = {}
+          $('#joinhouseholdmodal').modal('hide')
+          Notification.toast('You have joined your household!', 'success')
+        } catch (error) {
+          Notification.toast('Error: ' + error, 'error')
+        }
       }
-      // async joinHousehold() {
-      //   try {
-      //     await householdsService.joinHousehold()
-      //     state.joinHousehold = {}
-      //     $('#joinhouseholdmodal').modal('hide')
-      //     Notification.toast('You have joined your household!', 'success')
-      //   } catch (error) {
-      //     Notification.toast('Error: ' + error, 'error')
-      //   }
-      // }
     }
   },
   components: {

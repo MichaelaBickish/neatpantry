@@ -48,8 +48,8 @@ class HouseholdsService {
     throw new BadRequest('Invalid')
   }
 
-  async joinHousehold(userId, householdId, passcode) {
-    const household = await this.findById(householdId)
+  async joinHousehold(userId, passcode) {
+    const household = await this.findByPasscode(passcode)
     const found = household.collaborators.find(c => c === userId)
     if (household.passcode === passcode && !found) {
       household.collaborators.push(userId)
@@ -57,6 +57,14 @@ class HouseholdsService {
       return household
     }
     throw new BadRequest('Invalid')
+  }
+
+  async findByPasscode(code) {
+    const household = await dbContext.Households.findOne({ passcode: code })
+    if (!household) {
+      throw new BadRequest('that did not work')
+    }
+    return household
   }
 }
 

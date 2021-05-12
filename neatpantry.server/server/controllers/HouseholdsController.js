@@ -12,10 +12,11 @@ export class HouseholdsController extends BaseController {
       .use(Auth0Provider.getAuthorizedUserInfo)
       .get('', this.getAll)
       .get('/:id', this.getByHouseholdId)
+      // .get('/:passcode/passcode', this.getByHouseholdPasscode)
       .get('/:id/shelves', this.getShelvesByHouseholdId)
       .post('', this.create)
       .put('/:id', this.edit)
-      .post('/:id/collaborators', this.joinHousehold)
+      .post('/:passcode/collaborators', this.joinHousehold)
       .delete('/:id/collaborators/:collaboratorId', this.deleteCollaborator)
       .delete('/:id', this.delete)
   }
@@ -40,7 +41,7 @@ export class HouseholdsController extends BaseController {
 
   async joinHousehold(req, res, next) {
     try {
-      const data = await householdsService.joinHousehold(req.userInfo.id, req.params.id, req.body.passcode) // NOTE added .userId
+      const data = await householdsService.joinHousehold(req.userInfo.id, req.params.passcode) // NOTE added .userId
       return res.send(data)
     } catch (error) {
       next(error)
@@ -67,6 +68,15 @@ export class HouseholdsController extends BaseController {
       next(error)
     }
   }
+
+  // async getByHouseholdPasscode(req, res, next) {
+  //   try {
+  //     const data = await householdsService.findByPasscode(req.params.passcode) // TODO How to authenticate a collaborator's token
+  //     return res.send(data)
+  //   } catch (error) {
+  //     next(error)
+  //   }
+  // }
 
   async create(req, res, next) {
     try {
