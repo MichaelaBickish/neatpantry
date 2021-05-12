@@ -27,6 +27,17 @@ class HouseholdsService {
     AppState.households.push(res.data)
     router.push({ name: 'PantryPage', params: { id: res.data.id } })
   }
+  // '/:id/collaborators/:collaboratorId'
+
+  async deleteHouseholdCollaborator(householdId, collaboratorId) {
+    await api.delete(`api/households/${householdId}/collaborators/${collaboratorId}`)
+    await this.getHouseholdById(householdId)
+  }
+
+  async deleteHousehold(id) {
+    await api.delete('api/households/' + id)
+    router.push({ name: 'HouseholdsPage' })
+  }
 }
 
 export const householdsService = new HouseholdsService()

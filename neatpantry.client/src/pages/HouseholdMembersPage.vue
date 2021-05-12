@@ -3,6 +3,14 @@
 <template>
   <!-- TODO how do we GET members? -->
   <div class="container-fluid" v-if="state.activeHousehold">
+    <div class="row">
+      <div class="">
+        <button @click="deleteHousehold(state.activeHousehold.id)">
+          DELETE HOUSEHOLD
+        </button>
+        <span>{{ state.activeHousehold.title }}</span>
+      </div>
+    </div>
     <HouseholdMembers v-for="c in state.activeHousehold.collaboratorsProfiles" :key="c.id" :c-prop="c" />
   </div>
 </template>
@@ -35,7 +43,17 @@ export default {
     })
     return {
       route,
-      state
+      state,
+      async deleteHousehold(id) {
+        try {
+          if (await Notification.confirmAction('Are you sure you want to delete this household?')) {
+            await householdsService.deleteHousehold(id)
+            Notification.toast('Household Deleted', 'success')
+          }
+        } catch (error) {
+          Notification.toast('Error: ' + error, 'error')
+        }
+      }
 
     }
   },
