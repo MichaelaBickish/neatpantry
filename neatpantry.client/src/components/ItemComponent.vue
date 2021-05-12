@@ -18,7 +18,17 @@
         </div>
         <div id="collapseOne" class="collapse show" aria-labelledby="headingOne" data-parent="#accordionExample">
           <div class="card-body">
-            <span> Quantity: {{ item.quantity }} </span>
+            <span> Quantity:  {{ item.quantity }}
+
+            </span>
+            <!-- Add bttns increase by one or decrease by1 -->
+
+            <div>
+              <i class="fas fa-plus" title="Add 1"></i>
+            </div>
+            <div>
+              <i class="fas fa-minus" title="Remove 1"></i>
+            </div>
             <row class="editItem ">
               <div class="col d-flex align-items-end justify-content-end">
                 //TODO Edit Item function modal
