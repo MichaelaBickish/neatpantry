@@ -119,8 +119,9 @@
                 <button type="button"
                         class="btn btn-outline-primary"
                         v-if="state.edit"
+                        :key="item._id"
                         title="Click to Save Changes"
-                        @click="saveEdit"
+                        @click="saveEdit(item)"
                 >
                   Save Changes
                 </button>
@@ -147,11 +148,12 @@ export default {
     }
 
   },
-  setup() {
+  setup(props) {
     const state = reactive({
       edit: false,
       saved: false,
-      shelf: computed(() => AppState.shelves)
+      shelf: computed(() => AppState.shelves),
+      item: computed(() => AppState.items)
     })
 
     return {
@@ -160,6 +162,16 @@ export default {
         try {
           await itemsService.moveItem(item, shelfId)
           Notification.toast('Successfully Moved Item!', 'success')
+        } catch (error) {
+          Notification.toast('Error: ' + error, 'error')
+        }
+      },
+      async saveEdit() {
+        try {
+          await itemsService.saveEdit({ ...state.item, householdId: state.shelf.householdId })
+          // state.editedItem = {}
+          state.edit = false
+          Notification.toast('Edit Saved!', 'success')
         } catch (error) {
           Notification.toast('Error: ' + error, 'error')
         }

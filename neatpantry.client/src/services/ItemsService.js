@@ -27,6 +27,11 @@ class ItemsService {
     this.getItemsByShelfId(oldShelfId)
     this.getItemsByShelfId(item.shelfId)
   }
+
+  async saveEdit(item) {
+    await api.put('api/items/' + item.id, item)
+    this.getItemsByShelfId(item.shelfId)
+  }
 }
 
 export const itemsService = new ItemsService()
