@@ -30,7 +30,11 @@ class ItemsService {
 
   async saveEdit(item) {
     await api.put('api/items/' + item.id, item)
-    this.getItemsByShelfId(item.shelfId)
+  }
+
+  async deleteItem(item) {
+    logger.log(item)
+    await api.delete('api/items/' + item.id)
   }
 }
 
