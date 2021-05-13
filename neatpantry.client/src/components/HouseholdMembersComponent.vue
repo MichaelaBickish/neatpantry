@@ -1,22 +1,30 @@
 <template>
-  <div class="row mt-5">
-    <div class="col">
-      <div class="card w-75">
-        <div class="card-body">
-          <h5 class="card-title">
-            {{ cProp.name }}
-            {{ cProp.id }}
-            <!-- Household member profile name and profile picture -->
-          </h5>
-          <p class="card-text">
-            With supporting text below as a natural lead-in to additional content.
-            <!-- Household member email -->
-          </p>
-          <button type="button" class="btn btn-danger btn-sm" @click="deleteHouseholdCollaborator()">
-            <!-- @click="deleteCollaborator(cProp.id)" -->
-            Remove
-          </button>
+  <div class="mt-5 shadow-sm bg-white">
+    <div class="row p-3  d-flex d-row">
+      <div class="col-3 mx-3 d-flex flex-row justify-content-center align-items-center">
+        <img :src="cProp.picture"
+             alt="profile picture"
+             class="profile-pic shadow-sm rounded-circle border"
+        >
+      </div>
+      <div class="col d-flex flex-column justify-content-center align-items-start">
+        <div class="row">
+          <div class="col">
+            <h2>
+              {{ cProp.name }}
+            </h2>
+          </div>
         </div>
+        <div class="row">
+          <div class="col">
+            {{ cProp.email }}
+          </div>
+        </div>
+      </div>
+      <div class="col col-md-3 d-flex flex-row justify-content-end align-items-center pt-3">
+        <button type="button" class="btn btn-danger " @click="deleteHouseholdCollaborator()">
+          Remove
+        </button>
       </div>
     </div>
   </div>
@@ -61,6 +69,17 @@ export default {
 }
 </script>
 
-<style>
+<style scoped>
+h2{
+  font-size: 24px;
+  margin: 0;
+  padding: 0;
+}
+.profile-pic{
+width: 5rem;
+height: 5rem;
+object-fit: cover;
+
+}
 
 </style>

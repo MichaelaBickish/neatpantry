@@ -4,14 +4,25 @@
   <!-- TODO how do we GET members? -->
   <div class="container-fluid" v-if="state.activeHousehold">
     <div class="row">
-      <div class="">
-        <button @click="deleteHousehold(state.activeHousehold.id)">
-          DELETE HOUSEHOLD
-        </button>
-        <span>{{ state.activeHousehold.title }}</span>
+      <div class="col">
+        <HouseholdMembers v-for="c in state.activeHousehold.collaboratorsProfiles" :key="c.id" :c-prop="c" />
       </div>
     </div>
-    <HouseholdMembers v-for="c in state.activeHousehold.collaboratorsProfiles" :key="c.id" :c-prop="c" />
+    <!-- ---------- -->
+    <footer class="row d-flex flex-column mt-5 bg-light">
+      <div class="row">
+        <div class="col border-right justify-content-end d-flex ml-4 my-4">
+          <button type="button" class="btn btn-danger btn-block">
+            Remove Yourself
+          </button>
+        </div>
+        <div class="col justify-content-start d-flex mr-4 my-4">
+          <button type="button" class="btn btn-danger btn-block">
+            Delete Household
+          </button>
+        </div>
+      </div>
+    </footer>
   </div>
 </template>
 
@@ -71,8 +82,10 @@ export default {
 
 <!------------------------------------------------------------------->
 
-<style scoped>
-
+<style lang="css" scoped>
+.desktop-margin{
+  width: 80vw;
+}
 </style>
 
 <!------------------------------------------------------------------->
