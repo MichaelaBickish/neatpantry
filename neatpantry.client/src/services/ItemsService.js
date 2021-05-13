@@ -19,6 +19,14 @@ class ItemsService {
     AppState.items = res.data
     logger.log(res.data)
   }
+
+  async moveItem(item, shelfId) {
+    const oldShelfId = item.shelfId
+    item.shelfId = shelfId
+    await api.put('api/items/' + item.id, item)
+    this.getItemsByShelfId(oldShelfId)
+    this.getItemsByShelfId(item.shelfId)
+  }
 }
 
 export const itemsService = new ItemsService()
