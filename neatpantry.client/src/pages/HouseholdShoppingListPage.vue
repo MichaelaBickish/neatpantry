@@ -12,7 +12,7 @@
                 type="button"
                 class="btn btn-outline-dark btn-lg m-3"
                 data-toggle="modal"
-                data-target="#new-item-form"
+                data-target="#new-item-form-on-shopping-page"
         >
           <span> Add Item
           </span>
@@ -32,6 +32,7 @@
                        id="check-all-box"
                        name="check-all-box"
                        title="Check All Items"
+                       @click="toggleCheck"
                 >
               </th>
               <th scope="col">
@@ -53,7 +54,6 @@
                        id="check-one-box"
                        name="check-one-box"
                        title="Check This Item"
-                       @click="checkAll"
                 >
               </th>
               <td>Peanut Butter</td>
@@ -110,18 +110,30 @@
 // import { computed, reactive } from 'vue'
 import Notification from '../utils/Notification'
 import { shoppingListItemsService } from '../services/ShoppingListItemsService'
+import { onMounted, reactive } from 'vue'
+import { shelvesService } from '../services/ShelvesService'
+import { useRoute } from 'vue-router'
 export default {
   name: 'HouseholdShoppingListPage',
   setup() {
-    // const state = reactive({
+    const route = useRoute()
+    const state = reactive({
     //   shoppingListItems: computed(() => AppState.shoppingListItems)
-    // TODO create shoppingListItems in AppState.
-    // })
+    // TODO create shoppingListItems in AppState
+    })
+    onMounted(async() => {
+      try {
+        await shelvesService.getShelvesByHouseholdId(route.params.id)
+      } catch (error) {
+        Notification.toast('Error: ', error, 'error')
+      }
+    })
     return {
-      // state,
-      async checkAll(shoppingListItems) {
+      route,
+      state,
+      async toggleCheck(shoppingListItems) {
         try {
-          await shoppingListItemsService.checkAll()
+          await shoppingListItemsService.toggleCheck()
         } catch (error) {
           Notification.toast('Error: ' + error, 'error')
         }
