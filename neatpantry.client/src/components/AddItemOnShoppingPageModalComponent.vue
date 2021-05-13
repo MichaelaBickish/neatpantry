@@ -42,32 +42,20 @@
                      v-model="state.newItem.quantity"
                      required
               >
-              <div class="dropdown my-2">
-                <button class="btn btn-secondary dropdown-toggle"
-                        type="button"
-                        title="Choose Item's Shelf"
-                        id="dropdownMenuButton"
-                        data-toggle="dropdown"
-                        aria-haspopup="true"
-                        aria-expanded="false"
+
+              Select item's shelf: <select v-model="state.newItem.shelfId" class="my-2">
+                <option
+                  title="Choose This Shelf"
+                  v-for="shelf in state.shelves"
+                  :key="shelf.id"
+                  :value="shelf.id"
+                  required
                 >
-                  Choose item's shelf
-                </button>
-                <div class="dropdown-menu" aria-labelledby="dropdownMenuButton">
-                  <a class="dropdown-item action"
-                     type="button"
-                     title="Choose This Shelf"
-                     v-for="shelf in state.shelves"
-                     :key="shelf.id"
-                  >
-                    <!-- TODO in a tag: when you choose shelf, save it to newItem.shelfId v-model="state.newItem.shelfId" --"v-model not supported on a elements"-- -->
-                    <ul class="dropdown-item my-0">
-                      {{ shelf.title }}
-                    </ul>
-                  </a>
-                </div>
-              </div>
-              <div class="AutoAddCheckbox text-right mr-5">
+                  {{ shelf.title }}
+                </option>
+              </select>
+
+              <div class="AutoAddCheckbox">
                 <input class="action m-2"
                        type="checkbox"
                        id="AutoAdd"
@@ -90,7 +78,7 @@
                 </div>
                 <!-- need @click="sortClosed" -->
               </div>
-              <div class="recieveNotification text-right mr-5">
+              <div class="recieveNotification">
                 <input class="action m-2"
                        type="checkbox"
                        id="recieveNotification"
@@ -151,12 +139,11 @@ export default {
       state,
       async createItem() {
         try {
-          state.newItem.shelfId = route.params.id
-          state.newItem.householdId = state.activeShelf.householdId
+          state.newItem.householdId = route.params.id
           await itemsService.createItem(state.newItem)
           state.newItem = {}
           $('#new-item-form-on-shopping-page').modal('hide')
-          Notification.toast('Shelf Successfully Created!', 'success')
+          Notification.toast('Item Successfully Created!', 'success')
         } catch (error) {
           Notification.toast('Error: ' + error, 'error')
         }
