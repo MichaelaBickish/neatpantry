@@ -1,6 +1,5 @@
 <template>
   <div class="item-component">
-    item hello
     <div class="accordion" id="accordionExample">
       <div class="card">
         <div class="card-header" id="headingOne">
@@ -13,29 +12,117 @@
                     aria-expanded="true"
                     aria-controls="collapseOne"
             >
-              {{ item.title }}
+              <!-- NOTE look at contenteditable -->
+              <textarea type="text"
+                        v-if="state.edit"
+                        class="form-control"
+                        id="title"
+                        placeholder="Title..."
+                        minlength="3"
+                        v-model="item.title"
+                        required
+              >
+              </textarea>
+              <div v-else class="item-title">
+                <!-- make this an input based on button click -->
+                <span>{{ item.title }}</span>
+              </div>
             </button>
           </h2>
         </div>
         <!-- NOTE step2 bind the thing thats being targeted the :id and add the same thing minus the # -->
         <div :id="'collapseOne'+ item.id" class="collapse show" aria-labelledby="headingOne" data-parent="#accordionExample">
           <div class="card-body">
-            <span> Quantity:  {{ item.quantity }}
+            <div class="col-md-12">
+              <div class="row flex-direction-row">
+                <div class="col-2">
+                  <span> Quantity
 
-            </span>
-            <!-- Add bttns increase by one or decrease by1 -->
+                  </span>
+                  <textarea type="number"
+                            v-if="state.edit"
+                            class="form-control itemQuantity"
+                            id="title"
+                            placeholder="Title..."
+                            minlength="3"
+                            v-model="item.quantity"
+                            required
+                  >
+              </textarea>
+                  <div v-else class="item-title">
+                    <span>{{ item.quantity }}</span>
+                  </div>
 
-            <div>
-              <i class="fas fa-plus" title="Add 1"></i>
-            </div>
-            <div>
-              <i class="fas fa-minus" title="Remove 1"></i>
+                  <!-- TODO Add functions for bttns increase by one or decrease by1 -->
+
+                  <div>
+                    <i class="fas fa-plus" title="Add 1"></i>
+                  </div>
+                  <div>
+                    <i class="fas fa-minus" title="Remove 1"></i>
+                  </div>
+                </div>
+                <div class="col-2">
+                  <span> Notes
+
+                  </span>
+                  <textarea type="text"
+                            v-if="state.edit"
+                            class="form-control itemNotes"
+                            id="notes"
+                            placeholder="Notes..."
+                            minlength="3"
+                            v-model="item.notes"
+                            required
+                  >
+              </textarea>
+                  <div v-else class="item-note">
+                    <span>{{ item.notes }}</span>
+                  </div>
+                </div>
+                <div class="col-2">
+                  <div class="dropdown">
+                    <button class="btn btn-outline-secondary dropdown-toggle my-2"
+                            type="button"
+                            title="Move item to a different shelf!"
+                            id="dropdownMenu2"
+                            data-toggle="dropdown"
+                            aria-haspopup="true"
+                            aria-expanded="false"
+                    >
+                      <span class="text-dark">
+                        Move Task
+                      </span>
+                    </button>
+                    <div class="dropdown-menu" aria-labelledby="dropdownMenu2">
+                      <a class="dropdown-item action"
+                         type="button"
+                         title="Move to this shelf!"
+                         v-for="shelf in state.shelf"
+                         :key="shelf.id"
+                         @click="moveItem(item, shelf.id)"
+                      >
+                        <p>
+                          {{ shelf.title }}
+                        </p>
+                      </a>
+                    </div>
+                  </div>
+                </div>
+              </div>
             </div>
             <row class="editItem ">
               <div class="col d-flex align-items-end justify-content-end">
-                //TODO Edit Item function modal
-                <button type="button" class="btn btn-outline-primary">
+                <button type="button" class="btn btn-outline-primary" @click="state.edit = true">
                   Edit Item
+                </button>
+                <button type="button"
+                        class="btn btn-outline-primary"
+                        v-if="state.edit"
+                        title="Click to Save Changes"
+                        @click="saveEdit"
+                >
+                  Save Changes
                 </button>
               </div>
             </row>
@@ -47,6 +134,8 @@
 </template>
 
 <script>
+import { reactive, computed } from 'vue'
+import { AppState } from '../AppState'
 export default {
   name: 'ItemComponent',
   props: {
@@ -57,12 +146,23 @@ export default {
 
   },
   setup() {
-    return {}
+    const state = reactive({
+      edit: false,
+      saved: false,
+      shelf: computed(() => AppState.shelves)
+    })
+    return {
+      state
+    }
   },
   components: {}
 }
 </script>
 
 <style lang="scss" scoped>
+// .itemQuantity{
+//   max-width: 2.5rem;
+//   max-height: 3rem
 
+// }
 </style>
