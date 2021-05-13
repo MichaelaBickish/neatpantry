@@ -1,14 +1,14 @@
 <template>
   <div v-if="cProp.id != state.activeHousehold.creatorId">
     <div class="mt-3 shadow-sm bg-white">
-      <div class="row p-3  d-flex d-row">
-        <div class="col-3 mx-3 d-flex flex-row justify-content-center align-items-center">
+      <div class="row p-3 d-flex flex-md-row flex-column">
+        <div class="col col-md-3 mx-md-3 d-flex flex-row justify-content-center align-items-center">
           <img :src="cProp.picture"
                alt="profile picture"
                class="profile-pic shadow-sm rounded-circle border"
           >
         </div>
-        <div class="col d-flex flex-column justify-content-center align-items-start">
+        <div class="col d-flex flex-column justify-content-center align-items-center align-items-md-start">
           <div class="row">
             <div class="col">
               <h2>
@@ -22,8 +22,8 @@
             </div>
           </div>
         </div>
-        <div class="col col-md-3 d-flex flex-row justify-content-end align-items-center pt-3">
-          <button type="button" class="btn btn-danger " @click="deleteHouseholdCollaborator()">
+        <div class="col col-md-3 d-flex flex-row justify-content-center justify-content-md-end align-items-center pt-3">
+          <button type="button" class="btn btn-danger btn-block" @click="deleteHouseholdCollaborator()">
             Remove
           </button>
         </div>

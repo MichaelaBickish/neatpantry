@@ -2,24 +2,35 @@
 
 <template>
   <!-- TODO how do we GET members? -->
-  <div class="container-fluid" v-if="state.activeHousehold">
+  <div class="container desktop-margin" v-if="state.activeHousehold">
     <div class="row justify-content-center">
-      <div class="col-6 bg-white d-flex flex-column justify-content-center align-items-center rounded-bottom shadow-sm pt-3 pb-4">
+      <div class="col bg-white d-flex flex-column justify-content-center align-items-center rounded-bottom shadow-sm pt-3 pb-4 text-center">
         <div class="row">
           <div class="col">
             <h3>
             </h3>
           </div>
         </div>
-        <div class="row">
+        <div class="row  border-bottom">
           <div class="col">
             <h1>{{ state.activeHousehold.title }}</h1>
+            <!-- <div class="" v-if="state.activeHousehold.creator.id === state.account.id">
+              <p class="gray-text">
+                you own this household
+              </p>
+            </div> -->
+          </div>
+        </div>
+        <div class="row pt-3">
+          <div class="col p-2 gray-text">
+            <img class="rounded-circle border shadow-sm profile-pic mb-2" :src="state.activeHousehold.creator.picture" alt="">
+            <p>{{ state.activeHousehold.creator.id === state.account.id ? 'you own this household' : "owner: " + `${ state.activeHousehold.creator.name }` }}</p>
           </div>
         </div>
 
-        <div class="row pt-3">
+        <div class="row pt-3 pt-md-1">
           <div class="col">
-            <button type="button" class="btn btn-secondary btn-lg" data-toggle="modal" data-target="#getRoomPasscode">
+            <button type="button" class="btn btn-secondary btn-lg" data-toggle="modal" data-target="#getRoomPasscode" @click="state.copied = false">
               Get Room Passcode
             </button>
           </div>
@@ -44,11 +55,11 @@
           </div>
           <div class="modal-body text-center">
             <h2>
-              <input class="text-center pb-1" type="text" :value="state.activeHousehold.passcode">
+              <input class="text-center pb-1" type="text" :value="state.activeHousehold.passcode" id="clipboard">
             </h2>
           </div>
           <div class="modal-footer bg-light">
-            <button type="button" class="btn btn-primary" @click="copyTest">
+            <button type="button" class="btn btn-primary" @click="copyTheText()">
               {{ state.copied ? "copied" : "copy" }}
             </button>
             <button type="button" class="btn btn-secondary" data-dismiss="modal">
@@ -59,28 +70,63 @@
       </div>
     </div>
 
-    <div class="row mt-5 pb-3 mb-3 border-bottom">
+    <div class="row mt-5 border-top pt-3">
       <div class="col d-flex justify-content-center">
-        <h2>Household Members</h2>
+        <span class="h2-small">
+          Household Members
+        </span>
       </div>
     </div>
-    <div class="row">
-      <div class="col">
+    <div class="row pb-4 border-bottom justify-content-center">
+      <div class="col" v-if="state.activeHousehold.collaboratorsProfiles.length > 1">
         <HouseholdMembers v-for="c in state.activeHousehold.collaboratorsProfiles" :key="c.id" :c-prop="c" />
+      </div>
+      <div class="col-6 col-md-4 my-4" v-else>
+        <div class="rounded bg-white text-center py-3 shadow-sm">
+          <span><b>You have no members... so sad &#128542;</b></span>
+        </div>
       </div>
     </div>
     <!-- ---------- -->
-    <footer class="row d-flex flex-column mt-5 bg-light">
+    <footer class="row d-flex flex-column mt-5 bg-white shadow-sm rounded-top">
       <div class="row">
         <div class="col border-right justify-content-end d-flex ml-4 my-4">
-          <button type="button" class="btn btn-danger btn-block">
+          <button type="button" class="btn btn-danger btn-sm btn-block" :disabled="state.activeHousehold.collaboratorsProfiles.length > 1 ? disabled : ''">
             Remove Yourself
           </button>
         </div>
         <div class="col justify-content-start d-flex mr-4 my-4">
-          <button type="button" class="btn btn-danger btn-block" @click="deleteHousehold(state.activeHousehold.id)">
+          <button type="button" class="btn btn-danger btn-sm btn-block" data-toggle="modal" data-target="#deleteHousehold">
             Delete Household
           </button>
+          <div class="modal fade"
+               id="deleteHousehold"
+               tabindex="-1"
+               role="dialog"
+               aria-labelledby="deleteHouseholdLabel"
+               aria-hidden="true"
+          >
+            <div class="modal-dialog" role="document">
+              <div class="modal-content">
+                <div class="modal-header justify-content-center bg-light">
+                  <h5 id="deleteHouseholdLabel">
+                    Woah hang on! <span class="">{{ state.activeHousehold.title }}</span>
+                  </h5>
+                </div>
+                <div class="modal-body text-center">
+                  <h2>
+                    are you sure you want to delete the entire household?
+                  </h2>
+                </div>
+                <button type="button" class="btn btn-secondary" data-dismiss="modal">
+                  Can I guess not
+                </button>
+                <button type="button" class="btn btn-secondary" data-dismiss="modal" @click="deleteHousehold(state.activeHousehold.id)">
+                  Close
+                </button>
+              </div>
+            </div>
+          </div>
         </div>
       </div>
     </footer>
@@ -127,12 +173,12 @@ export default {
           Notification.toast('Error: ' + error, 'error')
         }
       },
-      copyTest() {
-
-      },
-      copyText() {
+      copyTheText() {
+        if (state.copied === false) {
+          state.copied = true
+        }
         /* Get the text field */
-        const copyText = document.getElementById('myInput')
+        const copyText = document.getElementById('clipboard')
 
         /* Select the text field */
         copyText.select()
@@ -140,9 +186,6 @@ export default {
 
         /* Copy the text inside the text field */
         document.execCommand('copy')
-
-        /* Alert the copied text */
-        alert('Copied the text: ' + copyText.value)
       }
 
     }
@@ -155,24 +198,31 @@ export default {
 
 <!------------------------------------------------------------------->
 
-<style scoped>
-
-</style>
-
-<!------------------------------------------------------------------->
-
 <style lang="css" scoped>
 .size-lock{
   font-size: 6rem;
 }
-.desktop-margin{
-  width: 80vw;
-}
+
 .center-input{
   text-align: center;
 }
 .h2-small {
-  font-size: 10px;
+  font-size: 1.75rem;
+  color: gray;
+}
+.gray-text{
+  color: gray;
+}
+.profile-pic{
+width: 5rem;
+height: 5rem;
+object-fit: cover;
+
+}
+@media only screen and (min-width: 600px) {
+.desktop-margin{
+  width: 75vw;
+}
 }
 </style>
 
