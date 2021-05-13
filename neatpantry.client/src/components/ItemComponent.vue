@@ -80,7 +80,7 @@
                     <span>{{ item.notes }}</span>
                   </div>
                 </div>
-                <div class="col-2">
+                <div class="col-2" v-if="state.shelf">
                   <div class="dropdown">
                     <button class="btn btn-outline-secondary dropdown-toggle my-2"
                             type="button"
@@ -94,7 +94,7 @@
                         Move Task
                       </span>
                     </button>
-                    <div class="dropdown-menu" aria-labelledby="dropdownMenu2">
+                    <div class="dropdown-menu moveShelfDropdown locked-scroll" aria-labelledby="dropdownMenu2">
                       <a class="dropdown-item action"
                          type="button"
                          title="Move to this shelf!"
@@ -111,7 +111,7 @@
                 </div>
               </div>
             </div>
-            <row class="editItem ">
+            <div class="row editItem ">
               <div class="col d-flex align-items-end justify-content-end">
                 <button type="button" class="btn btn-outline-primary" @click="state.edit = true">
                   Edit Item
@@ -125,7 +125,7 @@
                   Save Changes
                 </button>
               </div>
-            </row>
+            </div>
           </div>
         </div>
       </div>
@@ -134,7 +134,8 @@
 </template>
 
 <script>
-import { reactive, computed } from 'vue'
+import { reactive, computed, onMounted } from 'vue'
+import { shelvesService } from '../services/ShelvesService'
 import { AppState } from '../AppState'
 export default {
   name: 'ItemComponent',
@@ -151,6 +152,7 @@ export default {
       saved: false,
       shelf: computed(() => AppState.shelves)
     })
+
     return {
       state
     }
@@ -160,6 +162,16 @@ export default {
 </script>
 
 <style lang="scss" scoped>
+.dropdown-menu{
+  height: 20vh;
+  overflow-y: auto;
+  padding-bottom: 1rem;
+}
+// .locked-scroll {
+//   height: 50vh;
+//   overflow-y: scroll;
+// }
+
 // .itemQuantity{
 //   max-width: 2.5rem;
 //   max-height: 3rem

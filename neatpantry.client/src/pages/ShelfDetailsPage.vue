@@ -18,7 +18,7 @@
         </span>
       </button>
     </div>
-    <div class="row itemComponentRow">
+    <div class="row itemComponentRow" v-if="state.activeShelf">
       <div class="col-md-12">
         <ItemComponent v-for="item in state.items" :key="item.id" :item="item" />
       </div>
@@ -44,12 +44,14 @@ export default {
     const route = useRoute()
     const state = reactive({
       items: computed(() => AppState.items),
-      activeShelf: computed(() => AppState.activeShelf)
+      activeShelf: computed(() => AppState.activeShelf),
+      activeHousehold: computed(() => AppState.activeHousehold)
     })
     onMounted(async() => {
       try {
         await itemsService.activeShelf(route.params.id)
         await itemsService.getItemsByShelfId(route.params.id)
+        await shelvesService.getShelvesByHouseholdId(state.activeShelf.householdId)
       } catch (error) {
 
       }
