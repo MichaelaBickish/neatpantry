@@ -6,6 +6,7 @@
           <h2 class="mb-0">
             <!-- NOTE Step1 bind the data target and add the item.id -->
             <button class="btn btn-link btn-block text-left"
+                    title="Click for Item Info"
                     type="button"
                     data-toggle="collapse"
                     :data-target="'#collapseOne'+ item.id"
@@ -56,10 +57,10 @@
                   <!-- TODO Add functions for bttns increase by one or decrease by1 -->
 
                   <div>
-                    <i class="fas fa-plus" title="Add 1"></i>
+                    <i class="fas fa-plus action" :key="item.id" title="Add 1" @click="increase(item)"></i>
                   </div>
                   <div>
-                    <i class="fas fa-minus" title="Remove 1"></i>
+                    <i class="fas fa-minus action" :key="item.id" title="Remove 1" @click="decrease(item)"></i>
                   </div>
                 </div>
                 <div class="col-2">
@@ -112,12 +113,17 @@
               </div>
             </div>
             <div class="row editItem ">
+              <div class="col">
+                <button type="button" class="btn btn-outline-dark text-danger m-2" title="Click to Delete Item" @click="deleteItem(item)">
+                  Delete Item
+                </button>
+              </div>
               <div class="col d-flex align-items-end justify-content-end">
-                <button type="button" class="btn btn-outline-primary" @click="state.edit = true">
+                <button type="button" class="btn btn-outline-primary" title="Click to Edit Item Info" @click="state.edit = true">
                   Edit Item
                 </button>
                 <button type="button"
-                        class="btn btn-outline-primary"
+                        class="btn btn-outline-primary action"
                         v-if="state.edit"
                         :key="item.id"
                         title="Click to Save Changes"
@@ -178,6 +184,35 @@ export default {
         } catch (error) {
           Notification.toast('Error: ' + error, 'error')
         }
+      },
+      async increase(item) {
+        try {
+          item.quantity++
+          await itemsService.saveEdit({ quantity: item.quantity, id: item.id, householdId: state.activeShelf.householdId })
+        } catch (error) {
+          Notification.toast('Error: ' + error, 'error')
+        }
+      },
+      async decrease(item) {
+        try {
+          item.quantity--
+          if (item.quantity < 0) {
+            item.quantity = 0
+            return
+          }
+          await itemsService.saveEdit({ quantity: item.quantity, id: item.id, householdId: state.activeShelf.householdId })
+        } catch (error) {
+          Notification.toast('Error: ' + error, 'error')
+        }
+      },
+      async deleteItem(item) {
+        try {
+          if (await Notification.confirmAction()) {
+            await itemsService.deleteItem({ ...item, householdId: state.activeShelf.householdId })
+          }
+        } catch (error) {
+          Notification.toast('Error: ' + error, 'error')
+        }
       }
     }
   },
@@ -191,6 +226,9 @@ export default {
   height: 20vh;
   overflow-y: auto;
   padding-bottom: 1rem;
+}
+.action{
+  cursor: pointer;
 }
 // .locked-scroll {
 //   height: 50vh;
