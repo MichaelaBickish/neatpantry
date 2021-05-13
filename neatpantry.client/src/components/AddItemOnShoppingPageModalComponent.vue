@@ -55,6 +55,18 @@
                 </option>
               </select>
 
+              <!-- Checkbox to add shopping list -->
+              <div class="add-to-shopping-list-checkbox">
+                <input class="action m-2"
+                       type="checkbox"
+                       id="add-to-shopping-list"
+                       name="add-to-shopping-list"
+                       title="Add this new item to my shopping list"
+                       v-model="state.newItem.addToShoppingList"
+                >Yes! Add this new item to my shopping list
+              </div>
+              <!-- Checkbox to add item to shopping list -->
+
               <div class="AutoAddCheckbox">
                 <input class="action m-2"
                        type="checkbox"
@@ -128,7 +140,9 @@ export default {
   setup() {
     const route = useRoute()
     const state = reactive({
-      newItem: { },
+      newItem: {
+        addToShoppingList: false
+      },
       // newNote: {},
       shelves: computed(() => AppState.shelves),
       activeShelf: computed(() => AppState.activeShelf),
