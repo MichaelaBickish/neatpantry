@@ -5,10 +5,11 @@
       <div class="card">
         <div class="card-header" id="headingOne">
           <h2 class="mb-0">
+            <!-- NOTE Step1 bind the data target and add the item.id -->
             <button class="btn btn-link btn-block text-left"
                     type="button"
                     data-toggle="collapse"
-                    data-target="#collapseOne"
+                    :data-target="'#collapseOne'+ item.id"
                     aria-expanded="true"
                     aria-controls="collapseOne"
             >
@@ -16,7 +17,8 @@
             </button>
           </h2>
         </div>
-        <div id="collapseOne" class="collapse show" aria-labelledby="headingOne" data-parent="#accordionExample">
+        <!-- NOTE step2 bind the thing thats being targeted the :id and add the same thing minus the # -->
+        <div :id="'collapseOne'+ item.id" class="collapse show" aria-labelledby="headingOne" data-parent="#accordionExample">
           <div class="card-body">
             <span> Quantity:  {{ item.quantity }}
 
