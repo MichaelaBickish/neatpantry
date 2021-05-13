@@ -134,9 +134,10 @@
 </template>
 
 <script>
-import { reactive, computed, onMounted } from 'vue'
-import { shelvesService } from '../services/ShelvesService'
+import { reactive, computed } from 'vue'
 import { AppState } from '../AppState'
+import { itemsService } from '../services/ItemsService'
+import Notification from '../utils/Notification'
 export default {
   name: 'ItemComponent',
   props: {
@@ -154,9 +155,18 @@ export default {
     })
 
     return {
-      state
+      state,
+      async moveItem(item, shelfId) {
+        try {
+          await itemsService.moveItem(item, shelfId)
+          Notification.toast('Successfully Moved Item!', 'success')
+        } catch (error) {
+          Notification.toast('Error: ' + error, 'error')
+        }
+      }
     }
   },
+
   components: {}
 }
 </script>
