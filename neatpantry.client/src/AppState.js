@@ -8,5 +8,6 @@ export const AppState = reactive({
   activeHousehold: null,
   shelves: [],
   activeShelf: null,
-  items: []
+  items: [],
+  shoppingListItems: []
 })

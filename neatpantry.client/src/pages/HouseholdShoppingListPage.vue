@@ -39,6 +39,9 @@
                 Item
               </th>
               <th scope="col">
+                Added By
+              </th>
+              <th scope="col">
                 Quantity
               </th>
               <th scope="col">
@@ -47,45 +50,9 @@
             </tr>
           </thead>
           <tbody>
-            <tr>
-              <th scope="row">
-                <input type="checkbox"
-                       class="check-one-checkbox cursor-pointer"
-                       id="check-one-box"
-                       name="check-one-box"
-                       title="Check This Item"
-                >
-              </th>
-              <td>Peanut Butter</td>
-              <td><input type="number" title="Enter Quantity" placeholder="#..." min="1" style="max-width:80px;"></td>
-              <td><i class="fa fa-trash text-danger cursor-pointer" aria-hidden="true" title="Remove Item From Shopping List"></i></td>
-            </tr>
-            <tr>
-              <th scope="row">
-                <input type="checkbox"
-                       class="check-one-checkbox cursor-pointer"
-                       id="check-one-box"
-                       name="check-one-box"
-                       title="Check This Item"
-                >
-              </th>
-              <td>Lettuce Shmettuce</td>
-              <td><input type="number" title="Enter Quantity" placeholder="#..." min="1" style="max-width:80px;"></td>
-              <td><i class="fa fa-trash text-danger cursor-pointer" aria-hidden="true" title="Remove Item From Shopping List" @click="deleteListItem"></i></td>
-            </tr>
-            <tr>
-              <th scope="row">
-                <input type="checkbox"
-                       class="check-one-checkbox cursor-pointer"
-                       id="check-one-box"
-                       name="check-one-box"
-                       title="Check This Item"
-                >
-              </th>
-              <td>Weed of the Sea</td>
-              <td><input type="number" title="Enter Quantity" placeholder="#..." min="1" style="max-width:80px;"></td>
-              <td><i class="fa fa-trash text-danger cursor-pointer" aria-hidden="true" title="Remove Item From Shopping List"></i></td>
-            </tr>
+            <!-- inject component -->
+            <ShoppingListItemComponent v-for="item in state.shoppingListItems" :key="item.id" :item="item" />
+            <!-- inject component -->
           </tbody>
         </table>
       </div>
@@ -106,11 +73,10 @@
 </template>
 
 <script>
-// import { AppState } from '../AppState'
-// import { computed, reactive } from 'vue'
+import { AppState } from '../AppState'
 import Notification from '../utils/Notification'
 import { shoppingListItemsService } from '../services/ShoppingListItemsService'
-import { onMounted, reactive } from 'vue'
+import { onMounted, reactive, computed } from 'vue'
 import { shelvesService } from '../services/ShelvesService'
 import { useRoute } from 'vue-router'
 export default {
@@ -118,12 +84,12 @@ export default {
   setup() {
     const route = useRoute()
     const state = reactive({
-    //   shoppingListItems: computed(() => AppState.shoppingListItems)
-    // TODO create shoppingListItems in AppState
+      shoppingListItems: computed(() => AppState.shoppingListItems)
     })
     onMounted(async() => {
       try {
         await shelvesService.getShelvesByHouseholdId(route.params.id)
+        await shoppingListItemsService.getAllShoppingListItems()
       } catch (error) {
         Notification.toast('Error: ', error, 'error')
       }
@@ -134,6 +100,13 @@ export default {
       async toggleCheck(shoppingListItems) {
         try {
           await shoppingListItemsService.toggleCheck()
+        } catch (error) {
+          Notification.toast('Error: ' + error, 'error')
+        }
+      },
+      async newShoppingListItem() {
+        try {
+          await shoppingListItemsService.newShoppingListItem()
         } catch (error) {
           Notification.toast('Error: ' + error, 'error')
         }
