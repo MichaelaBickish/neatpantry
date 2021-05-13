@@ -1,6 +1,6 @@
-import BaseController from '../utils/BaseController'
 import { Auth0Provider } from '@bcwdev/auth0provider'
 import { itemsService } from '../services/ItemsService'
+import BaseController from '../utils/BaseController'
 
 export class ItemsController extends BaseController {
   constructor() {
@@ -36,7 +36,7 @@ export class ItemsController extends BaseController {
 
   async delete(req, res, next) {
     try {
-      const data = await itemsService.delete(req.params.id, req.userInfo.id, req.body.householdId)
+      const data = await itemsService.delete(req.params.id, req.userInfo.id)
       res.send(data)
     } catch (error) {
       next(error)

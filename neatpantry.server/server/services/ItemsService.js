@@ -17,7 +17,9 @@ class ItemsService {
     return 'Successfully Edited'
   }
 
-  async delete(itemId, userId, householdId) {
+  async delete(itemId, userId) {
+    // TODO get shelf
+    // send shelf.householdId
     await isAuthorized(userId, householdId)
     const data = await dbContext.Items.findOneAndDelete({ _id: itemId })
     if (!data) {
