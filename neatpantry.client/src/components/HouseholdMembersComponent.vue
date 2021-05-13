@@ -1,30 +1,32 @@
 <template>
-  <div class="mt-5 shadow-sm bg-white">
-    <div class="row p-3  d-flex d-row">
-      <div class="col-3 mx-3 d-flex flex-row justify-content-center align-items-center">
-        <img :src="cProp.picture"
-             alt="profile picture"
-             class="profile-pic shadow-sm rounded-circle border"
-        >
-      </div>
-      <div class="col d-flex flex-column justify-content-center align-items-start">
-        <div class="row">
-          <div class="col">
-            <h2>
-              {{ cProp.name }}
-            </h2>
+  <div v-if="cProp.id != state.activeHousehold.creatorId">
+    <div class="mt-3 shadow-sm bg-white">
+      <div class="row p-3  d-flex d-row">
+        <div class="col-3 mx-3 d-flex flex-row justify-content-center align-items-center">
+          <img :src="cProp.picture"
+               alt="profile picture"
+               class="profile-pic shadow-sm rounded-circle border"
+          >
+        </div>
+        <div class="col d-flex flex-column justify-content-center align-items-start">
+          <div class="row">
+            <div class="col">
+              <h2>
+                {{ cProp.name }}
+              </h2>
+            </div>
+          </div>
+          <div class="row">
+            <div class="col">
+              {{ cProp.email }}
+            </div>
           </div>
         </div>
-        <div class="row">
-          <div class="col">
-            {{ cProp.email }}
-          </div>
+        <div class="col col-md-3 d-flex flex-row justify-content-end align-items-center pt-3">
+          <button type="button" class="btn btn-danger " @click="deleteHouseholdCollaborator()">
+            Remove
+          </button>
         </div>
-      </div>
-      <div class="col col-md-3 d-flex flex-row justify-content-end align-items-center pt-3">
-        <button type="button" class="btn btn-danger " @click="deleteHouseholdCollaborator()">
-          Remove
-        </button>
       </div>
     </div>
   </div>

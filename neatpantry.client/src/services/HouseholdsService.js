@@ -1,6 +1,5 @@
 import { AppState } from '../AppState'
 import router from '../router.js'
-import { logger } from '../utils/Logger'
 import { api } from './AxiosService'
 
 class HouseholdsService {
@@ -11,7 +10,6 @@ class HouseholdsService {
 
   async getHouseholdById(householdId) {
     const res = await api.get('api/households/' + householdId)
-    logger.log('COME ON', res.data)
     AppState.activeHousehold = res.data
   }
 
