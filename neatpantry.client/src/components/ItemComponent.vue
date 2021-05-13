@@ -119,7 +119,7 @@
                 <button type="button"
                         class="btn btn-outline-primary"
                         v-if="state.edit"
-                        :key="item._id"
+                        :key="item.id"
                         title="Click to Save Changes"
                         @click="saveEdit(item)"
                 >
@@ -153,7 +153,9 @@ export default {
       edit: false,
       saved: false,
       shelf: computed(() => AppState.shelves),
-      item: computed(() => AppState.items)
+      activeShelf: computed(() => AppState.activeShelf),
+      item: computed(() => AppState.items),
+      activeHousehold: computed(() => AppState.activeHousehold)
     })
 
     return {
@@ -166,9 +168,10 @@ export default {
           Notification.toast('Error: ' + error, 'error')
         }
       },
-      async saveEdit() {
+      async saveEdit(item) {
         try {
-          await itemsService.saveEdit({ ...state.item, householdId: state.shelf.householdId })
+          // item.householdId = state.activeShelf.householdId this is the same as passing it below
+          await itemsService.saveEdit({ ...item, householdId: state.activeShelf.householdId })
           // state.editedItem = {}
           state.edit = false
           Notification.toast('Edit Saved!', 'success')

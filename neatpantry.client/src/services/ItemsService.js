@@ -29,6 +29,7 @@ class ItemsService {
   }
 
   async saveEdit(item) {
+    logger.log(item)
     await api.put('api/items/' + item.id, item)
     this.getItemsByShelfId(item.shelfId)
   }
