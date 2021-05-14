@@ -11,7 +11,6 @@ export class ShoppingListItemsController extends BaseController {
       .get('', this.getAll)
       .post('', this.create)
       .put('/:id', this.edit)
-      .delete('/:id', this.delete)
   }
 
   async create(req, res, next) {
@@ -39,15 +38,6 @@ export class ShoppingListItemsController extends BaseController {
     try {
       const data = await shoppingListItemsService.getAll(req.query)
       return res.send(data)
-    } catch (error) {
-      next(error)
-    }
-  }
-
-  async delete(req, res, next) {
-    try {
-      const data = await shoppingListItemsService.delete(req.params.id, req.userInfo.id, req.body.householdId)
-      res.send(data)
     } catch (error) {
       next(error)
     }

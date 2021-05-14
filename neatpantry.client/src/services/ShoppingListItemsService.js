@@ -11,15 +11,22 @@ class ShoppingListItemsService {
   }
 
   async createShoppingListItem(body) {
-    debugger
     const res = await api.post('api/shoppinglistitems', body)
     AppState.shoppingListItems = [...AppState.shoppingListItems, res.data]
+    await this.getAllShoppingListItems()
   }
 
   async getAllShoppingListItems() {
     const res = await api.get('api/shoppinglistitems')
     logger.log('this is shopping list items', res.data)
     AppState.shoppingListItems = res.data
+  }
+
+  async deleteShoppingListItem(item) {
+    await api.delete('api/households/' + item.householdId + '/shoppinglistitems/' + item.id)
+    AppState.shoppingListItems = AppState.shoppingListItems.filter(i => i.id !== item.id)
+
+    return 'Successfully Deleted!'
   }
 }
 

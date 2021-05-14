@@ -3,6 +3,7 @@ import { Auth0Provider } from '@bcwdev/auth0provider'
 import { householdsService } from '../services/HouseholdsService'
 import { shelvesService } from '../services/ShelvesService'
 import { makePasscode } from '../utils/GenerateId'
+import { shoppingListItemsService } from '../services/ShoppingListItemsService'
 
 export class HouseholdsController extends BaseController {
   constructor() {
@@ -18,6 +19,7 @@ export class HouseholdsController extends BaseController {
       .put('/:id', this.edit)
       .post('/:passcode/collaborators', this.joinHousehold)
       .delete('/:id/collaborators/:collaboratorId', this.deleteCollaborator)
+      .delete('/:id/shoppingListItems/:itemId', this.deleteListItem)
       .delete('/:id', this.delete)
   }
 
@@ -107,6 +109,15 @@ export class HouseholdsController extends BaseController {
     try {
       req.body.creatorId = req.userInfo.id
       const data = await householdsService.delete(req.params.id, req.userInfo.id)
+      res.send(data)
+    } catch (error) {
+      next(error)
+    }
+  }
+
+  async deleteListItem(req, res, next) {
+    try {
+      const data = await shoppingListItemsService.delete(req.params.id, req.userInfo.id, req.params.itemId)
       res.send(data)
     } catch (error) {
       next(error)
