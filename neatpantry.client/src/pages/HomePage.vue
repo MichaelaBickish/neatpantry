@@ -7,116 +7,66 @@
         <div class="card text-center shadow-sm">
           <div class="card-body">
             <h1 class="card-title">
-              Landing Page
+              Your Pantry Awaits
             </h1>
             <p class="card-text">
-              Lorem ipsum dolor sit amet, consectetur adipisicing elit. Dolorum omnis qui sint aliquam beatae quibusdam accusamus,
+              Neat is a full-stack application that allows you to organize your pantry as well as your shopping list.
             </p><div class="row">
               <!-- TODO remove v-if they are already logged in, if not fire the log in confirm action -->
               <div class="col border-right justify-content-end d-flex ml-5">
                 <!-- Button trigger modal for create a household -->
-                <button type="button" class="btn btn-primary btn-block" data-toggle="modal" data-target="#createhouseholdmodal" title="Create A New Household">
+                <button type="button" class="btn btn-primary btn-block" data-toggle="modal" data-target="#signUp" title="Create A New Household">
                   Create
                 </button>
               </div>
               <div class="col justify-content-start d-flex mr-5">
                 <!-- Button trigger modal for JOIN a household -->
-                <button type="button" class="btn btn-secondary btn-block" data-toggle="modal" data-target="#joinhouseholdmodal" title="Join A Household">
+                <button type="button" class="btn btn-secondary btn-block" data-toggle="modal" data-target="#signUp" title="Join A Household">
                   Join
                 </button>
               </div>
             </div>
 
             <br>
-            <p>
-              Do you already have a household?
+            <p class="">
+              <button class="btn btn-sm" @click="login">
+                Do you already have a household?
+              </button>
               <!-- TODO change router link path -->
-              <router-link :to="{ name: 'About' }" class="">
-                <span>
-                  Sign In
-                </span>
-              </router-link>
+              <button type="button" class="btn btn-sm text-primary m-0 p-0" @click="login">
+                Sign In
+              </button>
             </p>
           </div>
         </div>
       </div>
     </div>
 
-    <!-- Create Household Modal -->
-    <div class="modal fade" id="createhouseholdmodal" tabindex="-1" aria-labelledby="createhouseholdmodalLabel" aria-hidden="true">
-      <div class="modal-dialog">
-        <div class="modal-content">
-          <div class="modal-header">
-            <h5 class="modal-title" id="createhouseholdmodalLabel">
-              Create a New Household
-            </h5>
-            <button type="button" class="close" data-dismiss="modal" aria-label="Close" title="Close">
-              <span aria-hidden="true">&times;</span>
-            </button>
-          </div>
-          <div class="modal-body">
-            <!--FORM-->
-            <form @submit.prevent="createHousehold">
-              <div class="form-group">
-                <label for="household-title">Enter Household Name</label>
-                <input type="text"
-                       class="form-control"
-                       id="household-title"
-                       aria-describedby="createhousehold"
-                       required
-                       v-model="state.newHousehold.title"
-                >
-                <small id="createhousehold" class="form-text text-muted">What would you like your household to be called?</small>
-              </div>
-              <div class="modal-footer">
-                <button type="button" class="btn btn-secondary" data-dismiss="modal" title="Close Modal">
-                  Close
-                </button>
-                <button type="submit" class="btn btn-primary" title="Click Here to Create Your New Household">
-                  Submit
-                </button>
-              </div>
-            </form>
-          </div>
-        </div>
-      </div>
-    </div>
     <!-- Join Household Modal -->
-    <div class="modal fade" id="joinhouseholdmodal" tabindex="-1" aria-labelledby="joinhouseholdmodalLabel" aria-hidden="true">
+    <div class="modal fade" id="signUp" tabindex="-1" aria-labelledby="signUpLabel" aria-hidden="true">
       <div class="modal-dialog">
         <div class="modal-content">
-          <div class="modal-header">
-            <h5 class="modal-title" id="joinhouseholdmodalLabel">
-              Your Household Is Waiting! Join It Now.
+          <div class="modal-header bg-primary">
+            <h5 class="modal-title" id="signUpLabel">
+              Before we get started
             </h5>
             <button type="button" class="close" data-dismiss="modal" aria-label="Close" title="Close">
               <span aria-hidden="true">&times;</span>
             </button>
           </div>
           <div class="modal-body">
-            <!--FORM-->
-            <form>
-              <!--  @submit.prevent="joinHousehold" -->
-              <div class="form-group">
-                <label for="household-title">Enter Household Passcode</label>
-                <input type="text"
-                       class="form-control"
-                       id="household-passcode"
-                       aria-describedby="joinhousehold"
-                       required
-                       v-model="state.joinHousehold.passcode"
-                >
-                <small id="joinhousehold" class="form-text text-muted">Enter the passcode you received from the creator of the household.</small>
-              </div>
-              <div class="modal-footer">
-                <button type="button" class="btn btn-secondary" data-dismiss="modal" title="Close Modal">
-                  Close
-                </button>
-                <button type="submit" class="btn btn-primary" title="Click Here to Join Your Household">
-                  Submit
-                </button>
-              </div>
-            </form>
+            <span> You'll need to make an account first. </span>
+          </div>
+          <div class="modal-footer">
+            <button type="button"
+                    class="btn btn-secondary btn-block"
+                    data-toggle="modal"
+                    data-target="#signUp"
+                    title="Join A Household"
+                    @click="login"
+            >
+              Create an Account
+            </button>
           </div>
         </div>
       </div>
@@ -156,7 +106,6 @@
       </div>
     </div> -->
     <div class="row">
-      <!--  v-if="state.households" ?????????????? -->
       <div class="col">
         <router-link :to="{ name: 'HouseholdsPage', params: {id: state.account.id} }" class="">
           <span>
@@ -173,50 +122,24 @@
 <script>
 import { reactive, computed } from 'vue'
 import { AppState } from '../AppState'
-import { householdsService } from '../services/HouseholdsService'
-import $ from 'jquery'
-import Notification from '../utils/Notification'
-// import { logger } from '../utils/Logger'
+import { AuthService } from '../services/AuthService'
+// import { useRouter } from 'vue-router'
 
 export default {
   name: 'Home',
   setup() {
+    // const router = useRouter()
     const state = reactive({
       user: computed(() => AppState.user),
       account: computed(() => AppState.account),
-      households: computed(() => AppState.households),
-      newHousehold: {},
-      joinHousehold: {}
+      households: computed(() => AppState.households)
     })
-    // onMounted(async() => {
-    //   try {
-    //     await householdsService.getAllHouseholds()
-    //   } catch (error) {
-    //     Notification.toast('Error:' + error, 'error')
-    //   }
-    // })
     return {
       state,
-      async createHousehold() {
-        try {
-          await householdsService.createHousehold(state.newHousehold)
-          state.newHousehold = {}
-          $('#createhouseholdmodal').modal('hide')
-          Notification.toast('Nice! Your Household Was Created!', 'success')
-        } catch (error) {
-          Notification.toast('Error: ' + error, 'error')
-        }
+      async login() {
+        AuthService.loginWithPopup()
+        // router.push({ name: 'HouseholdsPage' })
       }
-      // async joinHousehold() {
-      //   try {
-      //     await householdsService.joinHousehold()
-      //     state.joinHousehold = {}
-      //     $('#joinhouseholdmodal').modal('hide')
-      //     Notification.toast('You have joined your household!', 'success')
-      //   } catch (error) {
-      //     Notification.toast('Error: ' + error, 'error')
-      //   }
-      // }
     }
   },
   components: {

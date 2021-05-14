@@ -2,7 +2,7 @@
   <div v-if="cProp.id != state.activeHousehold.creatorId">
     <div class="mt-3 shadow-sm bg-white">
       <div class="row p-3 d-flex flex-md-row flex-column">
-        <div class="col col-md-3 mx-md-3 d-flex flex-row justify-content-center align-items-center">
+        <div class="col col-md-3 mx-md-3 mt-md-3 d-flex flex-row justify-content-center align-items-center">
           <img :src="cProp.picture"
                alt="profile picture"
                class="profile-pic shadow-sm rounded-circle border"
