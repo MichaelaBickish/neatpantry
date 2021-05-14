@@ -19,8 +19,9 @@ class ItemsService {
 
   async delete(itemId, userId) {
     // TODO get shelf
+    const item = await this.findOneItem({ _id: itemId })
     // send shelf.householdId
-    await isAuthorized(userId, householdId)
+    await isAuthorized(userId, item.householdId)
     const data = await dbContext.Items.findOneAndDelete({ _id: itemId })
     if (!data) {
       throw new BadRequest('Invalid Id')
@@ -30,6 +31,14 @@ class ItemsService {
 
   async findItemsByShelfId(query = {}) {
     const items = await dbContext.Items.find(query)
+    if (!items) {
+      throw new BadRequest('Invalid Shelf Id')
+    }
+    return items
+  }
+
+  async findOneItem(query = {}) {
+    const items = await dbContext.Items.findOne(query)
     if (!items) {
       throw new BadRequest('Invalid Shelf Id')
     }
