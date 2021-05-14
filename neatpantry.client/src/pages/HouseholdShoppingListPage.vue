@@ -31,7 +31,6 @@
                 <input type="checkbox"
                        class="check-all-checkbox cursor-pointer"
                        id="check-all-box"
-                       checked
                        name="check-all-box"
                        title="Check All Items"
                        @click="toggleCheck"
@@ -87,7 +86,8 @@ export default {
   setup() {
     const route = useRoute()
     const state = reactive({
-      shoppingListItems: computed(() => AppState.shoppingListItems)
+      shoppingListItems: computed(() => AppState.shoppingListItems),
+      shoppingListItemsAreChecked: computed(() => AppState.shoppingListItemsAreChecked)
     })
     onMounted(async() => {
       try {
@@ -100,9 +100,9 @@ export default {
     return {
       route,
       state,
-      async toggleCheck(shoppingListItems) {
+      toggleCheck() {
         try {
-          await shoppingListItemsService.toggleCheck()
+          AppState.shoppingListItemsAreChecked = !AppState.shoppingListItemsAreChecked
         } catch (error) {
           Notification.toast('Error: ' + error, 'error')
         }

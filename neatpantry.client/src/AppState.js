@@ -9,5 +9,6 @@ export const AppState = reactive({
   shelves: [],
   activeShelf: null,
   items: [],
-  shoppingListItems: []
+  shoppingListItems: [],
+  shoppingListItemsAreChecked: false
 })
