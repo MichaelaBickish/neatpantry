@@ -4,17 +4,17 @@ import { isAuthorized } from '../utils/HouseAuth'
 class ShoppingListItemsService {
   async create(body, userId) {
     await isAuthorized(userId, body.householdId)
-    return await dbContext.Items.create(body)
+    return await dbContext.ShoppingListItems.create(body)
   }
 
   async getAll(query = {}) {
-    const data = await dbContext.ShoppingListItems(query)
+    const data = await dbContext.ShoppingListItems.find(query)
     return data
   }
 
   async edit(body, userId) {
     await isAuthorized(userId, body.householdId)
-    const data = await dbContext.Items.findOneAndUpdate({ _id: body.id }, body, { new: true })
+    const data = await dbContext.ShoppingListItems.findOneAndUpdate({ _id: body.id }, body, { new: true })
     if (!data) {
       throw new BadRequest('Invalid Id')
     }
@@ -23,7 +23,7 @@ class ShoppingListItemsService {
 
   async delete(shoppinglistitemId, userId, householdId) {
     await isAuthorized(userId, householdId)
-    const data = await dbContext.Items.findOneAndDelete({ _id: shoppinglistitemId })
+    const data = await dbContext.ShoppingListItems.findOneAndDelete({ _id: shoppinglistitemId })
     if (!data) {
       throw new BadRequest('Invalid Id')
     }

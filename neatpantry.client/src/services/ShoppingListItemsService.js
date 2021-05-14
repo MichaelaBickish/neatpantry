@@ -1,4 +1,5 @@
 import { AppState } from '../AppState'
+import { logger } from '../utils/Logger'
 import { api } from './AxiosService'
 
 class ShoppingListItemsService {
@@ -10,12 +11,14 @@ class ShoppingListItemsService {
   }
 
   async createShoppingListItem(body) {
+    debugger
     const res = await api.post('api/shoppinglistitems', body)
-    AppState.shoppingListItems = res.data
+    AppState.shoppingListItems = [...AppState.shoppingListItems, res.data]
   }
 
   async getAllShoppingListItems() {
     const res = await api.get('api/shoppinglistitems')
+    logger.log('this is shopping list items', res.data)
     AppState.shoppingListItems = res.data
   }
 }

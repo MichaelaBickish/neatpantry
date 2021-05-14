@@ -5,7 +5,7 @@
         <h1>Shopping List</h1>
       </div>
     </div>
-    <!-- Add Item -->
+    <!-- Add Item Button FOR the modal-->
     <div class="row mb-2 mb-md-5">
       <div class="col">
         <button title="Create New Item"
@@ -19,6 +19,7 @@
         </button>
       </div>
     </div>
+    <AddItemOnShoppingPageModalComponent />
 
     <!-- Table -->
     <div class="row mb-2 mb-md-5 justify-content-center">
@@ -127,7 +128,7 @@ export default {
       // }
     }
   },
-  components: {}
+  components: { }
 }
 </script>
 
