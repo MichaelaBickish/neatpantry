@@ -7,7 +7,7 @@
         <div class="card text-center shadow-sm">
           <div class="card-body">
             <h1 class="card-title">
-              Your Pantry Awaits
+              Welcome!
             </h1>
             <p class="card-text">
               Neat is a full-stack application that allows you to organize your pantry as well as your shopping list.
@@ -72,39 +72,47 @@
       </div>
     </div>
 
-    <!-- <div class="row">
+    <div class="row">
       <div class="col">
         <div class="row">
-          <div class="col-md-12 text-center">
-            <h1>How it Works</h1>
-          </div>
-        </div>
-
-        <div class="row">
-          <div class="col col-md-4 d-flex flex-column align-items-center">
-            <img src="//placehold.it/200x200" alt="">
+          <div class="col col-md-4 d-flex flex-column align-items-center p-5">
+            <i class="fas fa-edit fa-5x text-gray mb-2" />
             <h2>Create</h2>
-            <p class="">
-              Start your household <br>Add household members<br>Invite members with your household's unique passcode
+            <p class="text-center text-gray mt-2">
+              Start your household Add household members. Invite members with your household's unique passcode.
             </p>
           </div>
-          <div class="col col-md-4 d-flex flex-column align-items-center">
-            <img src="//placehold.it/200x200" alt="">
+          <div class="col col-md-4 d-flex flex-column align-items-center p-5">
+            <i class="fas fa-cogs fa-5x text-gray mb-2" />
+            <h2>Customize</h2>
+            <p class="text-center text-gray mt-2">
+              Add shelves to your pantry. Add items to your shelves. Create a shopping list out of your chosen items.
+            </p>
+          </div>
+          <div class="col col-md-4 d-flex flex-column align-items-center p-5">
+            <i class="fas fa-clipboard-check fa-5x text-gray mb-2" />
+            <h2>Organize</h2>
+            <p class="text-center text-gray mt-2">
+              Access accurate item quantities. Get notified on expiration dates or when your item quantity reaches a certain number.
+            </p>
+          </div>
+          <!-- <div class="col col-md-4 d-flex flex-column align-items-center">
+            <i class="fas fa-cogs fa-5x text-gray" />
             <h2>Customize</h2>
             <p class="">
               Add "shelves"<br>Add items to your shelves<br>Utilize a shopping list
             </p>
           </div>
           <div class="col col-md-4 d-flex flex-column align-items-center">
-            <img src="//placehold.it/200x200" alt="">
+            <i class="fas fa-cogs fa-5x text-gray" />
             <h2>Organize</h2>
             <p class="">
               Access your accurate item quantities<br>Get notified on expiration dates or when your item quantity reaches a certain number<br>
             </p>
-          </div>
+          </div> -->
         </div>
       </div>
-    </div> -->
+    </div>
     <div class="row">
       <div class="col">
         <router-link :to="{ name: 'HouseholdsPage', params: {id: state.account.id} }" class="">
@@ -123,12 +131,12 @@
 import { reactive, computed } from 'vue'
 import { AppState } from '../AppState'
 import { AuthService } from '../services/AuthService'
-// import { useRouter } from 'vue-router'
+import { useRouter } from 'vue-router'
 
 export default {
   name: 'Home',
   setup() {
-    // const router = useRouter()
+    const router = useRouter()
     const state = reactive({
       user: computed(() => AppState.user),
       account: computed(() => AppState.account),
@@ -137,8 +145,10 @@ export default {
     return {
       state,
       async login() {
-        AuthService.loginWithPopup()
-        // router.push({ name: 'HouseholdsPage' })
+        await AuthService.loginWithPopup()
+        if (state.user.isAuthenticated) {
+          router.push({ name: 'HouseholdsPage' })
+        }
       }
     }
   },
@@ -162,6 +172,9 @@ export default {
 .border-right{
   border-right-width: 1rem;
   border-right-color: black;
+}
+.text-gray{
+  color: gray
 }
 </style>
 
