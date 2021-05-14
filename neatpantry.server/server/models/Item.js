@@ -26,7 +26,7 @@ const Item = new Schema(
     shelfId: { type: ObjectId, ref: 'Shelf', required: true },
     householdId: { type: ObjectId, ref: 'Household', required: true },
     listId: { type: ObjectId, ref: 'ShoppingListItem' },
-    notes: [Note]
+    notes: ''
 
   },
   { timestamps: true, toJSON: { virtuals: true } }
