@@ -32,35 +32,39 @@
           </h2>
         </div>
         <!-- NOTE step2 bind the thing thats being targeted the :id and add the same thing minus the # -->
-        <div :id="'collapseOne'+ item.id" class="collapse show" aria-labelledby="headingOne" data-parent="#accordionExample">
+        <div :id="'collapseOne'+ item.id"
+             class="collapse"
+             aria-labelledby="headingOne"
+             data-parent="#accordionExample"
+        >
           <div class="card-body">
             <div class="col-md-12">
               <div class="row flex-direction-row">
-                <div class="col-2">
+                <div class="col-4">
                   <span> Quantity
 
                   </span>
-                  <textarea type="number"
-                            v-if="state.edit"
-                            class="form-control itemQuantity"
-                            id="title"
-                            placeholder="Title..."
-                            minlength="3"
-                            v-model="item.quantity"
-                            required
+                  <input type="number"
+                         v-if="state.edit"
+                         class="form-control itemQuantity"
+                         id="title"
+                         placeholder="Title..."
+                         minlength="3"
+                         v-model="item.quantity"
+                         required
                   >
-              </textarea>
                   <div v-else class="item-title">
                     <span>{{ item.quantity }}</span>
                   </div>
 
                   <!-- TODO Add functions for bttns increase by one or decrease by1 -->
-
-                  <div>
-                    <i class="fas fa-plus action" :key="item.id" title="Add 1" @click="increase(item)"></i>
-                  </div>
-                  <div>
-                    <i class="fas fa-minus action" :key="item.id" title="Remove 1" @click="decrease(item)"></i>
+                  <div class="row">
+                    <div>
+                      <i class="fas fa-plus action m-2" :key="item.id" title="Add 1" @click="increase(item)"></i>
+                    </div>
+                    <div>
+                      <i class="fas fa-minus action m-2" :key="item.id" title="Remove 1" @click="decrease(item)"></i>
+                    </div>
                   </div>
                 </div>
                 <div class="col-2">
@@ -92,7 +96,7 @@
                             aria-expanded="false"
                     >
                       <span class="text-dark">
-                        Move Task
+                        Move Item
                       </span>
                     </button>
                     <div class="dropdown-menu moveShelfDropdown locked-scroll" aria-labelledby="dropdownMenu2">
@@ -113,17 +117,17 @@
               </div>
             </div>
             <div class="row editItem ">
-              <div class="col">
+              <div class="col mt-4">
                 <button type="button" class="btn btn-outline-dark text-danger m-2" title="Click to Delete Item" @click="deleteItem(item)">
                   Delete Item
                 </button>
               </div>
               <div class="col d-flex align-items-end justify-content-end">
-                <button type="button" class="btn btn-outline-primary" title="Click to Edit Item Info" @click="state.edit = true">
+                <button type="button" class="btn btn-outline-primary m-1" title="Click to Edit Item Info" @click="state.edit = true">
                   Edit Item
                 </button>
                 <button type="button"
-                        class="btn btn-outline-primary action"
+                        class="btn btn-outline-secondary action m-1"
                         v-if="state.edit"
                         :key="item.id"
                         title="Click to Save Changes"

@@ -1,15 +1,15 @@
 <template>
   <div class="pantry-page container-fluid px-0 " v-if="state.activeHousehold">
     <div class="row">
-      <div class="col-md-12">
-        <h1>
-          {{ state.activeHousehold.title }}
+      <div class="col-md-9">
+        <h1 contenteditable="true" class="p-3 m-2" title="Rename Household on your Page" @blur="saveEdits">
+          {{ state.activeHousehold.title || 'Name Your Household' }}
         </h1>
       </div>
-      <div class="col-md-12">
+      <div class="col-md-3 d-flex justify-content-end">
         <button title="Create New Shelf"
                 type="button"
-                class="btn btn-outline-dark btn-lg m-3"
+                class="btn btn-outline-dark btn-lg m-4"
                 data-toggle="modal"
                 data-target="#new-shelf-form"
         >
@@ -27,7 +27,6 @@
         </div>
       </div>
     </div>
-    <!-- TODO Make sure this content doesnt bleed into the footer w the icons -->
     <footer>
       <div class="row footer mt-2">
         <div class="col-md-12 d-flex justify-content-around text-info mb-2">
@@ -50,6 +49,7 @@
 import { reactive, onMounted, computed } from 'vue'
 import { AppState } from '../AppState'
 import { shelvesService } from '../services/ShelvesService'
+import { householdsService } from '../services/HouseholdsService'
 import { useRoute } from 'vue-router'
 import Notification from '../utils/Notification'
 export default {
@@ -73,7 +73,16 @@ export default {
     })
     return {
       route,
-      state
+      state,
+      async saveEdits(event) {
+        // saveEdits(evt)
+        try {
+          state.activeHousehold.title = event.target.innerText
+          await householdsService.saveEdits(state.activeHousehold)
+        } catch (error) {
+          Notification.toast('Error: ' + error, 'error')
+        }
+      }
 
     }
   },

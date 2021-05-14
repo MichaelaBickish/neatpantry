@@ -36,6 +36,10 @@ class HouseholdsService {
     await api.delete('api/households/' + id)
     router.push({ name: 'HouseholdsPage' })
   }
+
+  async saveEdits(household) {
+    await api.put(`api/households/${household.id}`, household)
+  }
 }
 
 export const householdsService = new HouseholdsService()
