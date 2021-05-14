@@ -7,10 +7,10 @@
         <div class="card text-center shadow-sm">
           <div class="card-body">
             <h1 class="card-title">
-              {{ state.user.isAuthenticated ? "You're logged in" : "You're not logged in" }}
+              Your Households Page
             </h1>
             <p class="card-text">
-              Lorem ipsum dolor sit amet, consectetur adipisicing elit. Dolorum omnis qui sint aliquam beatae quibusdam accusamus,
+              You can create and joing multiple households.
             </p><div class="row">
               <div class="col border-right justify-content-end d-flex ml-5">
                 <!-- Button trigger modal for create a household -->
@@ -25,17 +25,6 @@
                 </button>
               </div>
             </div>
-
-            <br>
-            <p>
-              Do you already have a household?
-              <!-- TODO change router link path -->
-              <router-link :to="{ name: 'About' }" class="">
-                <span>
-                  Sign In
-                </span>
-              </router-link>
-            </p>
           </div>
         </div>
       </div>
@@ -153,11 +142,12 @@
         </div>
       </div>
     </div> -->
-    <div class="row">
-      <!--  v-if="state.households" ?????????????? -->
-      <div class="col">
-        <Households v-for="household in state.households" :key="household.id" :household-prop="household" />
+
+    <div class="row my-4 py-4 mx-md-5 d-flex justify-content-center border-top border-bottom">
+      <div class="col text-center" v-if="state.households.length == 0">
+        <span class="text-gray"> You don't have any households! </span>
       </div>
+      <HouseholdComponent v-for="household in state.households" :key="household.id" :household-prop="household" />
     </div>
   </div>
 </template>
@@ -170,7 +160,6 @@ import { AppState } from '../AppState'
 import { householdsService } from '../services/HouseholdsService'
 import $ from 'jquery'
 import Notification from '../utils/Notification'
-import Households from '../components/HouseholdComponent.vue'
 // import { logger } from '../utils/Logger'
 
 export default {
@@ -215,7 +204,6 @@ export default {
     }
   },
   components: {
-    Households
   }
 }
 </script>
@@ -234,6 +222,9 @@ export default {
 .border-right{
   border-right-width: 1rem;
   border-right-color: black;
+}
+.text-gray{
+  color: gray;
 }
 </style>
 
