@@ -136,7 +136,7 @@ import $ from 'jquery'
 import Notification from '../utils/Notification'
 import { useRoute } from 'vue-router'
 export default {
-  name: 'AddItemModalComponent',
+
   setup() {
     const route = useRoute()
     const state = reactive({

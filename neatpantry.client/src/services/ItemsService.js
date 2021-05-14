@@ -5,10 +5,11 @@ import { shoppingListItemsService } from './ShoppingListItemsService'
 
 class ItemsService {
   async createItem(body) {
-    await api.post('api/items', body)
+    const res = await api.post('api/items', body)
     this.getItemsByShelfId(body.shelfId, body.householdId)
     // if checkbox is checked, add item to shopping list.
     if (body.addToShoppingList === true) {
+      body.itemId = res.data.id
       // NOTE is this where we would assign body's properties (which are items properties) to the new ShoppingListItem's properties
       await shoppingListItemsService.createShoppingListItem(body)
     }
