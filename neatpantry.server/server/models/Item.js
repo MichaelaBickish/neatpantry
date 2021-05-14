@@ -21,7 +21,7 @@ const Item = new Schema(
     title: { type: String, required: true },
     price: { type: Number },
     expiration: { type: Date },
-    quantity: { type: Number, default: 0 },
+    quantity: { type: Number, default: 1 },
     creatorId: { type: String, ref: 'Account', required: true },
     shelfId: { type: ObjectId, ref: 'Shelf', required: true },
     householdId: { type: ObjectId, ref: 'Household', required: true },

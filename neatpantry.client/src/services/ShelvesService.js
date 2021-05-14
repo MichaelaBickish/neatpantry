@@ -28,6 +28,12 @@ class ShelvesService {
     this.getShelvesByHouseholdId(activeShelf.householdId)
     // AppState.shelves = AppState.shelves.filter(s => s.id !== activeShelf.id)
   }
+
+  async saveEdits(shelf) {
+    if (await document.getElementById('contenteditable')) {
+      await api.put(`api/shelves/${shelf.id}`, shelf)
+    }
+  }
 }
 
 export const shelvesService = new ShelvesService()

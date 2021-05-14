@@ -39,8 +39,10 @@ class ItemsService {
   }
 
   async deleteItem(item) {
+    const shelfId = item.shelfId
     logger.log(item)
     await api.delete('api/items/' + item.id)
+    this.getItemsByShelfId(shelfId)
   }
 }
 

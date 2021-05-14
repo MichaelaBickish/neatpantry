@@ -1,9 +1,12 @@
 <template>
   <div class="shelf-details-page container-fluid">
     <div class="row" v-if="state.activeShelf">
-      <h1 class="ml-3">
-        {{ state.activeShelf.title }}
-      </h1>
+      <!-- TODO mark to teach on contenteditable concept -->
+      <div contenteditable="true" id="contenteditable" class="shelfTitle m2" @blur="saveEdits(state.activeShelf)">
+        <h1 class="m-3">
+          {{ state.activeShelf.title }}
+        </h1>
+      </div>
     </div>
     <div class="row">
       <button title="Create New Item"
@@ -27,6 +30,9 @@
       <button type="button" class="btn btn-outline-dark text-danger m-4" @click="deleteShelf(state.activeShelf)">
         Delete Shelf
       </button>
+      <!-- <button type="button" class="btn btn-outline-dark text-warning m-4" @click="editShelf(state.activeShelf)">
+        Edit Shelf
+      </button> -->
     </div>
   </div>
 </template>
@@ -65,6 +71,15 @@ export default {
           // state.activeShelf.householdId = state.activeShelf
           if (await Notification.confirmAction()) {
             await shelvesService.deleteShelf(state.activeShelf)
+          }
+        } catch (error) {
+          Notification.toast('Error: ' + error, 'error')
+        }
+      },
+      async saveEdits() {
+        try {
+          if (await document.getElementById('contenteditable')) {
+            await shelvesService.saveEdits(state.activeShelf)
           }
         } catch (error) {
           Notification.toast('Error: ' + error, 'error')
