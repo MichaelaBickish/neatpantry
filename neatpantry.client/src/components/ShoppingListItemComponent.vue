@@ -6,6 +6,7 @@
              id="check-one-box"
              name="check-one-box"
              title="Check This Item"
+             :checked="state.shoppingListItemsAreChecked"
       >
     </th>
     <td>{{ item.title }}</td>
@@ -30,6 +31,8 @@
 <script>
 import Notification from '../utils/Notification'
 import { shoppingListItemsService } from '../services/ShoppingListItemsService'
+import { reactive, computed } from 'vue'
+import { AppState } from '../AppState'
 export default {
   name: 'ShoppingListItemComponent',
   props: {
@@ -39,8 +42,11 @@ export default {
     }
   },
   setup(props) {
+    const state = reactive({
+      shoppingListItemsAreChecked: computed(() => AppState.shoppingListItemsAreChecked)
+    })
     return {
-
+      state,
       async deleteShoppingListItem() {
         try {
           if (await Notification.confirmAction()) {
