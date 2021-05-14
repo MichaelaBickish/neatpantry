@@ -4,11 +4,11 @@
   <!-- Need edit profile server function -->
   <div class="container-fluid">
     <div class="row d-flex justify-content-center">
-      <div class="col col-md-4">
+      <div class="col col-sm-10 col-md-6">
         <div class="card p-4 shadow-sm mt-3">
-          <div class="row">
+          <div class="row mt-2">
             <div class="col-12 d-flex justify-content-center align-items-center">
-              <img class="rounded-circle" :src="state.account.picture" width="100" alt="Profile Picture" />
+              <img class="rounded-circle border shadow-sm profile-pic" :src="state.account.picture" width="100" alt="Profile Picture" />
             </div>
             <div class="col text-center">
               <div class="card-body">
@@ -47,7 +47,6 @@
                            id="profileNameEdit"
                            aria-describedby="profileNameEdit"
                            placeholder="enter new name"
-                           required
                            v-model="state.profileEdits.name"
                     >
                   </div>
@@ -58,7 +57,6 @@
                            id="profilePictureEdit"
                            aria-describedby="profilePictureEdit"
                            placeholder="paste image URL"
-                           required
                            v-model="state.profileEdits.picture"
                     >
                   </div>
@@ -96,9 +94,15 @@ export default {
 
       async editProfile() {
         try {
+          if (!state.profileEdits.name) {
+            state.profileEdits.name = state.account.name
+          }
+          if (!state.profileEdits.picture) {
+            state.profileEdits.picture = state.account.picture
+          }
           await accountService.edit(state.profileEdits, state.account.id)
-          state.newBoardName = {}
-          Notification.toast('Board Updated!', 'success')
+          state.profileEdits = {}
+          Notification.toast('Profile Updated!', 'success')
         } catch (error) {
           Notification.toast('Error: ' + error, 'error')
         }
@@ -116,6 +120,11 @@ h1{
 }
 img {
   max-width: 100px;
+}
+.profile-pic{
+width: 5rem;
+height: 5rem;
+object-fit: cover;
 }
 </style>
 

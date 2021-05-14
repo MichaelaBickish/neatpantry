@@ -28,7 +28,7 @@
           </div>
         </div>
 
-        <div class="row pt-3 pt-md-1">
+        <div class="row pt-3  mb-2 border-top">
           <div class="col">
             <button type="button" class="btn btn-secondary btn-lg" data-toggle="modal" data-target="#getRoomPasscode" @click="state.copied = false">
               Get Room Passcode
@@ -70,14 +70,14 @@
       </div>
     </div>
 
-    <div class="row mt-5 border-top pt-3">
+    <div class="row mt-5 border-top pt-4">
       <div class="col d-flex justify-content-center">
         <span class="h2-small">
           Household Members
         </span>
       </div>
     </div>
-    <div class="row pb-4 border-bottom justify-content-center">
+    <div class="row pb-3 border-bottom justify-content-center">
       <div class="col" v-if="state.activeHousehold.collaboratorsProfiles.length > 1">
         <HouseholdMembers v-for="c in state.activeHousehold.collaboratorsProfiles" :key="c.id" :c-prop="c" />
       </div>
@@ -91,7 +91,7 @@
     <footer class="row d-flex flex-column mt-5 bg-white shadow-sm rounded-top">
       <div class="row">
         <div class="col border-right justify-content-end d-flex ml-4 my-4">
-          <button type="button" class="btn btn-danger btn-sm btn-block" :disabled="state.activeHousehold.collaboratorsProfiles.length > 1 ? disabled : ''">
+          <button type="button" class="btn btn-danger btn-sm btn-block" :disabled="state.activeHousehold.creator.id != state.account.id ? disabled : ''" @click="removeYourself">
             Remove Yourself
           </button>
         </div>
@@ -99,6 +99,7 @@
           <button type="button" class="btn btn-danger btn-sm btn-block" data-toggle="modal" data-target="#deleteHousehold">
             Delete Household
           </button>
+          <!-- Modal -->
           <div class="modal fade"
                id="deleteHousehold"
                tabindex="-1"
@@ -108,27 +109,34 @@
           >
             <div class="modal-dialog" role="document">
               <div class="modal-content">
-                <div class="modal-header justify-content-center bg-light">
-                  <h5 id="deleteHouseholdLabel">
-                    Woah hang on! <span class="">{{ state.activeHousehold.title }}</span>
+                <div class="modal-header">
+                  <h5 class="modal-title" id="deleteHouseholdLabel">
+                    Woah, hang on!
                   </h5>
+                  <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                    <span aria-hidden="true">&times;</span>
+                  </button>
                 </div>
-                <div class="modal-body text-center">
-                  <h2>
-                    are you sure you want to delete the entire household?
-                  </h2>
+                <div class="modal-body">
+                  <p>You're about to permanently delete your household,</p>
+                  <h6 class="mt-1">
+                    are you sure about this?
+                  </h6>
                 </div>
-                <button type="button" class="btn btn-secondary" data-dismiss="modal">
-                  Can I guess not
-                </button>
-                <button type="button" class="btn btn-secondary" data-dismiss="modal" @click="deleteHousehold(state.activeHousehold.id)">
-                  Close
-                </button>
+                <div class="modal-footer">
+                  <button type="button" class="btn btn-secondary" data-dismiss="modal">
+                    I gues not...
+                  </button>
+                  <button type="button" class="btn btn-primary" data-dismiss="modal" @click="deleteHousehold(state.activeHousehold.id)">
+                    Yep, Let's do this
+                  </button>
+                </div>
               </div>
             </div>
           </div>
         </div>
       </div>
+      <!-- @click="deleteHousehold(state.activeHousehold.id)" -->
     </footer>
   </div>
 </template>
@@ -142,6 +150,7 @@ import { householdsService } from '../services/HouseholdsService'
 import { useRoute } from 'vue-router'
 import Notification from '../utils/Notification'
 import HouseholdMembers from '../components/HouseholdMembersComponent.vue'
+import router from '../router.js'
 
 export default {
   name: 'HouseHoldMemberPage',
@@ -165,7 +174,7 @@ export default {
       state,
       async deleteHousehold(id) {
         try {
-          if (await Notification.confirmAction('Are you sure you want to delete this household?')) {
+          if (await Notification.confirmAction('Final warning, Are you sure you want to delete this household?')) {
             await householdsService.deleteHousehold(id)
             Notification.toast('Household Deleted', 'success')
           }
@@ -173,19 +182,25 @@ export default {
           Notification.toast('Error: ' + error, 'error')
         }
       },
+      async removeYourself() {
+        try {
+          if (await Notification.confirmAction('Are you sure you want leave this household?')) {
+            await householdsService.deleteHouseholdCollaborator(state.activeHousehold.id, state.account.id)
+            router.push({ name: 'HouseholdsPage' })
+          }
+        } catch (error) {
+          Notification.toast('You cannot delete that!: ' + error, 'error')
+        }
+      },
       copyTheText() {
         if (state.copied === false) {
           state.copied = true
         }
-        /* Get the text field */
         const copyText = document.getElementById('clipboard')
-
-        /* Select the text field */
         copyText.select()
-        copyText.setSelectionRange(0, 99999) /* For mobile devices */
-
-        /* Copy the text inside the text field */
+        copyText.setSelectionRange(0, 99999)
         document.execCommand('copy')
+        Notification.toast('Copied to clipboard!', 'success')
       }
 
     }
@@ -217,7 +232,10 @@ export default {
 width: 5rem;
 height: 5rem;
 object-fit: cover;
-
+}
+p{
+  margin: 0 ;
+  padding: 0
 }
 @media only screen and (min-width: 600px) {
 .desktop-margin{
