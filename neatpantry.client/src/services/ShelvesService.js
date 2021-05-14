@@ -30,9 +30,7 @@ class ShelvesService {
   }
 
   async saveEdits(shelf) {
-    if (await document.getElementById('contenteditable')) {
-      await api.put(`api/shelves/${shelf.id}`, shelf)
-    }
+    await api.put(`api/shelves/${shelf.id}`, shelf)
   }
 }
 

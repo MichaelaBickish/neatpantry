@@ -42,7 +42,7 @@
 
                      v-model="state.newItem.quantity"
               >
-              <div class="AutoAddCheckbox text-right mr-5">
+              <div class="AutoAddCheckbox text-left mr-5">
                 <input class="action m-2"
                        type="checkbox"
                        id="AutoAdd"
@@ -53,28 +53,38 @@
                 <span
                   class="setThreshhold "
                 >
-                  Auto Add Item</span>
+                  Auto add item to shopping list at quantity:</span>
                 <!-- @click="setToAutoAdd" -->
                 <div>
-                  <input type="text"
+                  <input type="number"
+                         class="ml-5"
                          v-if="state.autoAdd"
                          placeholder="set threshold"
                          title="Auto Add threshold"
                          id="threshold"
                   >
                 </div>
-                <!-- need @click="sortClosed" -->
               </div>
-              <div class="recieveNotification text-right mr-5">
+              <div class="recieveNotification text-left mr-5">
                 <input class="action m-2"
                        type="checkbox"
                        id="recieveNotification"
                        name="recieveNotification"
                        title="Click to Recieve Notification"
-                       @click="getANotification"
+                       @click="state.recieveNotification = !state.recieveNotification"
                 >
 
-                <span class="addNotification "> Add Notification</span><br>
+                <span class="addNotification "> Notify me when item reaches quantity:</span>
+                <div>
+                  <input type="number"
+                         class="ml-5"
+                         v-if="state.recieveNotification"
+                         placeholder="set threshold"
+                         title="Notify me threshold"
+                         id="notifyMeThreshold"
+                  >
+                </div>
+                <br>
               </div>
             </div>
             <!-- <form action="" @submit.prevent="createNote">
@@ -120,7 +130,8 @@ export default {
       shelves: computed(() => AppState.shelves),
       activeShelf: computed(() => AppState.activeShelf),
       items: computed(() => AppState.items),
-      autoAdd: false
+      autoAdd: false,
+      recieveNotification: false
     })
     return {
       state,

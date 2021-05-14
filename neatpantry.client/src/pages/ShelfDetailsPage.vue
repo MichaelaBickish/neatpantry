@@ -2,24 +2,26 @@
   <div class="shelf-details-page container-fluid">
     <div class="row" v-if="state.activeShelf">
       <!-- TODO mark to teach on contenteditable concept -->
-      <div contenteditable="true" id="contenteditable" class="shelfTitle m2" @blur="saveEdits(state.activeShelf)">
-        <h1 class="m-3">
-          {{ state.activeShelf.title }}
+      <!-- <h1><contentEditableComponent v-model="state.activeShelf.title" @saveEdits="saveEdits" /></h1> -->
+      <div class="col-md-9 shelfTitle m2">
+        <h1 contenteditable="true" class="p-3 m-3" title="Rename Shelf" @blur="saveEdits">
+          {{ state.activeShelf.title || 'Name This Shelf' }}
         </h1>
       </div>
-    </div>
-    <div class="row">
-      <button title="Create New Item"
-              type="button"
-              class="btn btn-outline-dark btn-lg m-3"
-              data-toggle="modal"
-              data-target="#new-item-form"
-      >
-        <!-- v-if="state.user.isAuthenticated" -->
-        <span> Add Item
-          {{ state.items.title }}
-        </span>
-      </button>
+
+      <div class="col-md-3 my-3">
+        <button title="Create New Item"
+                type="button"
+                class="btn btn-outline-dark btn-lg m-3"
+                data-toggle="modal"
+                data-target="#new-item-form"
+        >
+          <!-- v-if="state.user.isAuthenticated" -->
+          <span> Add Item
+            {{ state.items.title }}
+          </span>
+        </button>
+      </div>
     </div>
     <div class="row itemComponentRow" v-if="state.activeShelf">
       <div class="col-md-12">
@@ -76,11 +78,11 @@ export default {
           Notification.toast('Error: ' + error, 'error')
         }
       },
-      async saveEdits() {
+      async saveEdits(event) {
+        // saveEdits(evt)
         try {
-          if (await document.getElementById('contenteditable')) {
-            await shelvesService.saveEdits(state.activeShelf)
-          }
+          state.activeShelf.title = event.target.innerText
+          await shelvesService.saveEdits(state.activeShelf)
         } catch (error) {
           Notification.toast('Error: ' + error, 'error')
         }
