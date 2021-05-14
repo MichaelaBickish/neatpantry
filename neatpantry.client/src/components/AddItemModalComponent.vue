@@ -41,7 +41,6 @@
                      min="0"
 
                      v-model="state.newItem.quantity"
-                     required
               >
               <div class="AutoAddCheckbox text-right mr-5">
                 <input class="action m-2"
