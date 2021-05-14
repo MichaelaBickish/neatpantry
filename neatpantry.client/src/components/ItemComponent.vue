@@ -118,7 +118,7 @@
             </div>
             <div class="row editItem ">
               <div class="col mt-4">
-                <button type="button" class="btn btn-outline-dark text-danger m-2" title="Click to Delete Item" @click="deleteItem(item)">
+                <button type="button" class="btn btn-outline-dark btn-sm text-danger m-2" title="Click to Delete Item" @click="deleteItem(item)">
                   Delete Item
                 </button>
               </div>

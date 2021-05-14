@@ -7,6 +7,7 @@ class ItemsService {
   async createItem(body) {
     const res = await api.post('api/items', body)
     this.getItemsByShelfId(body.shelfId, body.householdId)
+    logger.log(body)
     // if checkbox is checked, add item to shopping list.
     if (body.addToShoppingList === true) {
       body.itemId = res.data.id
@@ -44,6 +45,14 @@ class ItemsService {
     logger.log(item)
     await api.delete('api/items/' + item.id)
     this.getItemsByShelfId(shelfId)
+  }
+
+  async setToAutoAdd() {
+    // take in the item
+    // check if it is within auto add []
+    // compare the quantity vs threshold if quantity is at or lower than threshold
+
+    // trigger the add item to shopping list item method shoppingListItemsService
   }
 }
 

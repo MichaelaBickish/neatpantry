@@ -62,6 +62,7 @@
                          placeholder="set threshold"
                          title="Auto Add threshold"
                          id="threshold"
+                         v-model="state.newItem.threshold"
                   >
                 </div>
               </div>
@@ -146,25 +147,14 @@ export default {
         } catch (error) {
           Notification.toast('Error: ' + error, 'error')
         }
+      },
+      async setToAutoAdd() {
+        try {
+          await itemsService.setToAutoAdd()
+        } catch (error) {
+          Notification.toast('Error: ' + error, 'error')
+        }
       }
-      //     async createNote() {
-      // try {
-      //   // these are saving the itemId and the shlef = to Id onto the comment before we send the object state.newNote over to service. We access the newNote using the term body in service
-      //   state.newNote.itemId = props.item.id
-      //   state.newNote.shelfId = props.item.shelfId
-      //   await itemsService.createNote(state.newNote)
-      //   Notification.toast('Successfully Created Note!', 'success')
-      //   state.newNote = {}
-      // } catch (error) {
-      //   Notification.toast('Error: ' + error, 'error')
-      // }
-      // async autoAdd() {
-      //   try {
-      //     await itemsService.addItem()
-      //   } catch (error) {
-
-      //   }
-      // }
     }
   },
   components: {}
