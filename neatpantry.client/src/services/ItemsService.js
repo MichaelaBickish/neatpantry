@@ -10,6 +10,7 @@ class ItemsService {
     // if checkbox is checked, add item to shopping list.
     if (body.addToShoppingList === true) {
       body.itemId = res.data.id
+      body.quantity = 1
       // NOTE is this where we would assign body's properties (which are items properties) to the new ShoppingListItem's properties
       await shoppingListItemsService.createShoppingListItem(body)
     }

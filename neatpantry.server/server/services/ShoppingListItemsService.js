@@ -8,7 +8,7 @@ class ShoppingListItemsService {
   }
 
   async getAll(query = {}) {
-    const data = await dbContext.ShoppingListItems.find(query)
+    const data = await dbContext.ShoppingListItems.find(query).populate('creator', 'name picture')
     return data
   }
 
@@ -21,7 +21,7 @@ class ShoppingListItemsService {
     return 'Successfully Edited'
   }
 
-  async delete(shoppinglistitemId, userId, householdId) {
+  async delete(householdId, userId, shoppinglistitemId) {
     await isAuthorized(userId, householdId)
     const data = await dbContext.ShoppingListItems.findOneAndDelete({ _id: shoppinglistitemId })
     if (!data) {

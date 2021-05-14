@@ -31,10 +31,12 @@
                 <input type="checkbox"
                        class="check-all-checkbox cursor-pointer"
                        id="check-all-box"
+                       checked
                        name="check-all-box"
                        title="Check All Items"
                        @click="toggleCheck"
                 >
+                <!-- TODO add checklistitems in appstate. when the main checkbox is checked, appstate.checklistitems = true. On item component, v-if checklistitems ? 'checked': '' -->
               </th>
               <th scope="col">
                 Item
