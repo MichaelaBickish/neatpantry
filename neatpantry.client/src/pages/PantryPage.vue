@@ -49,6 +49,7 @@
 import { reactive, onMounted, computed } from 'vue'
 import { AppState } from '../AppState'
 import { shelvesService } from '../services/ShelvesService'
+import { householdsService } from '../services/HouseholdsService'
 import { useRoute } from 'vue-router'
 import Notification from '../utils/Notification'
 export default {
@@ -72,16 +73,16 @@ export default {
     })
     return {
       route,
-      state
-      // async saveEdits(event) {
-      //   // saveEdits(evt)
-      //   try {
-      //     state.activeHousehold.title = event.target.innerText
-      //     await householdsService.saveEdits(state.activehousehold)
-      //   } catch (error) {
-      //     Notification.toast('Error: ' + error, 'error')
-      //   }
-      // }
+      state,
+      async saveEdits(event) {
+        // saveEdits(evt)
+        try {
+          state.activeHousehold.title = event.target.innerText
+          await householdsService.saveEdits(state.activeHousehold)
+        } catch (error) {
+          Notification.toast('Error: ' + error, 'error')
+        }
+      }
 
     }
   },
