@@ -22,6 +22,7 @@ const Item = new Schema(
     price: { type: Number },
     expiration: { type: Date },
     quantity: { type: Number, default: 1 },
+    threshold: { type: Number, default: 0 },
     creatorId: { type: String, ref: 'Account', required: true },
     shelfId: { type: ObjectId, ref: 'Shelf', required: true },
     householdId: { type: ObjectId, ref: 'Household', required: true },
