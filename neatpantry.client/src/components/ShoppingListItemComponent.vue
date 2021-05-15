@@ -1,12 +1,13 @@
 <template class="shopping-list-item-component">
   <tr>
-    <th scope="row item-row">
+    <th scope="row" class="item-row">
       <input type="checkbox"
-             class="check-one-checkbox cursor-pointer"
+             class="check-one-box cursor-pointer"
              id="check-one-box"
              name="check-one-box"
              title="Check This Item"
              :checked="state.shoppingListItemsAreChecked"
+             v-model="item.selected"
       >
     </th>
     <td>{{ item.title }}</td>
