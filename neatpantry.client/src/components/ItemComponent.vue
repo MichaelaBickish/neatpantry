@@ -41,7 +41,7 @@
             <div class="col-md-12">
               <div class="row flex-direction-row">
                 <div class="col-4">
-                  <span> Quantity
+                  <span> Quantity:
 
                   </span>
                   <input type="number"
@@ -60,15 +60,15 @@
                   <!-- TODO Add functions for bttns increase by one or decrease by1 -->
                   <div class="row">
                     <div>
-                      <i class="fas fa-plus action m-2" :key="item.id" title="Add 1" @click="increase(item)"></i>
+                      <i class="fas fa-minus action m-2" :key="item.id" title="Remove 1" @click="decrease(item)"></i>
                     </div>
                     <div>
-                      <i class="fas fa-minus action m-2" :key="item.id" title="Remove 1" @click="decrease(item)"></i>
+                      <i class="fas fa-plus action m-2" :key="item.id" title="Add 1" @click="increase(item)"></i>
                     </div>
                   </div>
                 </div>
-                <div class="col-2">
-                  <span> Notes
+                <div class="col-5">
+                  <span> Notes:
 
                   </span>
                   <textarea type="text"
@@ -85,9 +85,9 @@
                     <span>{{ item.notes }}</span>
                   </div>
                 </div>
-                <div class="col-2" v-if="state.shelf">
+                <div class="col-3 d-flex justify-content-end" v-if="state.shelf">
                   <div class="dropdown">
-                    <button class="btn btn-outline-secondary dropdown-toggle my-2"
+                    <button class="btn btn-outline-secondary dropdown-toggle "
                             type="button"
                             title="Move item to a different shelf!"
                             id="dropdownMenu2"
@@ -148,6 +148,7 @@
 import { reactive, computed } from 'vue'
 import { AppState } from '../AppState'
 import { itemsService } from '../services/ItemsService'
+import { shoppingListItemsService } from '../services/ShoppingListItemsService'
 import Notification from '../utils/Notification'
 export default {
   name: 'ItemComponent',
@@ -180,10 +181,22 @@ export default {
       },
       async saveEdit(item) {
         try {
+          // if the items quantity is less than or equal to threshold AND the autoAdd box was check on creation
+          if (item.threshold <= item.quantity && state.autoAdd) {
+            // attatch the items id and save it as item.itemId
+            item.itemId = item.id
+            // then send it to be created in the shoppinglist
+            await shoppingListItemsService.createShoppingListItem(item)
+            // this says if the quantity will be less than zero then set it to zero. Makes sure we cannot getinto the negitives
+          } else if (item.quantity < 0) {
+            item.quantity = 0
+            return
+          }
           // item.householdId = state.activeShelf.householdId this is the same as passing it below
           await itemsService.saveEdit({ ...item, householdId: state.activeShelf.householdId })
           // state.editedItem = {}
           state.edit = false
+
           Notification.toast('Edit Saved!', 'success')
         } catch (error) {
           Notification.toast('Error: ' + error, 'error')
@@ -199,8 +212,16 @@ export default {
       },
       async decrease(item) {
         try {
+          // if triggered decrease by 1
           item.quantity--
-          if (item.quantity < 0) {
+          // if the items quantity is less than or equal to threshold AND the autoAdd box was check on creation
+          if (item.threshold <= item.quantity && state.autoAdd) {
+            // attatch the items id and save it as item.itemId
+            item.itemId = item.id
+            // then send it to be created in the shoppinglist
+            await shoppingListItemsService.createShoppingListItem(item)
+            // this says if the quantity will be less than zero then set it to zero. Makes sure we cannot getinto the negitives
+          } else if (item.quantity < 0) {
             item.quantity = 0
             return
           }

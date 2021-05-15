@@ -141,20 +141,22 @@ export default {
           state.newItem.shelfId = route.params.id
           state.newItem.householdId = state.activeShelf.householdId
           await itemsService.createItem(state.newItem)
+          // if(state.autoAdd){
+          //   AppState.autoAdd.push(body)}
           state.newItem = {}
           $('#new-item-form').modal('hide')
-          Notification.toast('Shelf Successfully Created!', 'success')
-        } catch (error) {
-          Notification.toast('Error: ' + error, 'error')
-        }
-      },
-      async setToAutoAdd() {
-        try {
-          await itemsService.setToAutoAdd()
+          Notification.toast('Item Successfully Created!', 'success')
         } catch (error) {
           Notification.toast('Error: ' + error, 'error')
         }
       }
+      // async setToAutoAdd() {
+      //   try {
+      //     await itemsService.setToAutoAdd()
+      //   } catch (error) {
+      //     Notification.toast('Error: ' + error, 'error')
+      //   }
+      // }
     }
   },
   components: {}
