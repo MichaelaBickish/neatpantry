@@ -48,17 +48,19 @@
                        id="AutoAdd"
                        name="AutoAdd"
                        title="Click to Auto Add Item"
-                       @click="state.autoAdd = !state.autoAdd"
+                       @click="state.setToAutoAdd.autoAdd = !state.setToAutoAdd.autoAdd"
                 >
+                <!-- step1 this state.setToAutoAdd.autoAdd is the global variable called autoAdd that is set in appState -->
                 <span
                   class="setThreshhold "
                 >
                   Auto add item to shopping list at quantity:</span>
-                <!-- @click="setToAutoAdd" -->
+
                 <div>
+                  <!-- step 1.5  v-if="state.setToAutoAdd.autoAdd"-->
                   <input type="number"
                          class="ml-5"
-                         v-if="state.autoAdd"
+                         v-if="state.setToAutoAdd.autoAdd"
                          placeholder="set threshold"
                          title="Auto Add threshold"
                          id="threshold"
@@ -131,7 +133,9 @@ export default {
       shelves: computed(() => AppState.shelves),
       activeShelf: computed(() => AppState.activeShelf),
       items: computed(() => AppState.items),
-      autoAdd: false,
+      // this is bringing in the entire appstate and saving it to setToAutoAdd so we can drill into it and get the global variable autoAdd
+      setToAutoAdd: computed(() => AppState),
+      // autoAdd: false,
       recieveNotification: false
     })
     return {
@@ -140,6 +144,10 @@ export default {
         try {
           state.newItem.shelfId = route.params.id
           state.newItem.householdId = state.activeShelf.householdId
+          // step3 if they clicked the checkbox above then flip the server model to true
+          if (state.setToAutoAdd.autoAdd) {
+            state.newItem.autoAdd = true
+          }
           await itemsService.createItem(state.newItem)
           // if(state.autoAdd){
           //   AppState.autoAdd.push(body)}
