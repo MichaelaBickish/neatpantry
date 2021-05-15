@@ -185,7 +185,7 @@ export default {
       async saveEdit(item) {
         try {
           // if the items quantity is less than or equal to threshold AND the autoAdd box was check on creation
-          if (item.threshold >= item.quantity && state.setToAutoAdd.autoAdd) {
+          if (item.threshold >= item.quantity && item.autoAdd === true) {
             // attatch the items id and save it as item.itemId
             item.itemId = item.id
             item.autoAdd = true
@@ -225,7 +225,7 @@ export default {
           item.quantity--
 
           // if the items quantity is less than or equal to threshold AND the autoAdd box was check on creation
-          if (item.threshold >= item.quantity && state.setToAutoAdd.autoAdd) {
+          if (item.threshold >= item.quantity && item.autoAdd === true) {
             // attatch the items id and save it as item.itemId
             item.itemId = item.id
             item.autoAdd = true
