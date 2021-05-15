@@ -166,7 +166,8 @@ export default {
       shelf: computed(() => AppState.shelves),
       activeShelf: computed(() => AppState.activeShelf),
       item: computed(() => AppState.items),
-      activeHousehold: computed(() => AppState.activeHousehold)
+      activeHousehold: computed(() => AppState.activeHousehold),
+      setToAutoAdd: computed(() => AppState)
     })
 
     return {
@@ -182,9 +183,10 @@ export default {
       async saveEdit(item) {
         try {
           // if the items quantity is less than or equal to threshold AND the autoAdd box was check on creation
-          if (item.threshold <= item.quantity && state.autoAdd) {
+          if (item.threshold <= item.quantity && state.setToAutoAdd.autoAdd) {
             // attatch the items id and save it as item.itemId
             item.itemId = item.id
+            item.autoAdd = true
             // then send it to be created in the shoppinglist
             await shoppingListItemsService.createShoppingListItem(item)
             // this says if the quantity will be less than zero then set it to zero. Makes sure we cannot getinto the negitives
@@ -214,10 +216,12 @@ export default {
         try {
           // if triggered decrease by 1
           item.quantity--
+
           // if the items quantity is less than or equal to threshold AND the autoAdd box was check on creation
-          if (item.threshold <= item.quantity && state.autoAdd) {
+          if (item.threshold <= item.quantity && state.setToAutoAdd.autoAdd) {
             // attatch the items id and save it as item.itemId
             item.itemId = item.id
+            item.autoAdd = true
             // then send it to be created in the shoppinglist
             await shoppingListItemsService.createShoppingListItem(item)
             // this says if the quantity will be less than zero then set it to zero. Makes sure we cannot getinto the negitives

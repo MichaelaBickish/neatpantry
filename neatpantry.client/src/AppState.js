@@ -10,5 +10,6 @@ export const AppState = reactive({
   activeShelf: null,
   items: [],
   shoppingListItems: [],
-  shoppingListItemsAreChecked: false
+  shoppingListItemsAreChecked: false,
+  autoAdd: false
 })
