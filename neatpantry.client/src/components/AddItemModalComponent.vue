@@ -74,17 +74,18 @@
                        id="recieveNotification"
                        name="recieveNotification"
                        title="Click to Recieve Notification"
-                       @click="state.recieveNotification = !state.recieveNotification"
+                       @click="state.recieveNotification.notificationChecked = !state.recieveNotification.notificationChecked"
                 >
 
                 <span class="addNotification "> Notify me when item reaches quantity:</span>
                 <div>
                   <input type="number"
                          class="ml-5"
-                         v-if="state.recieveNotification"
+                         v-if="state.recieveNotification.notificationChecked"
                          placeholder="set threshold"
                          title="Notify me threshold"
                          id="notifyMeThreshold"
+                         v-model="state.newItem.threshold"
                   >
                 </div>
                 <br>
@@ -125,7 +126,8 @@ import Notification from '../utils/Notification'
 import { useRoute } from 'vue-router'
 export default {
   name: 'AddItemModalComponent',
-  setup() {
+  emits: ['notify'],
+  setup(props, { emit }) {
     const route = useRoute()
     const state = reactive({
       newItem: { },
@@ -135,8 +137,9 @@ export default {
       items: computed(() => AppState.items),
       // this is bringing in the entire appstate and saving it to setToAutoAdd so we can drill into it and get the global variable autoAdd
       setToAutoAdd: computed(() => AppState),
+      recieveNotification: computed(() => AppState)
       // autoAdd: false,
-      recieveNotification: false
+      // recieveNotification: false
     })
     return {
       state,
@@ -147,17 +150,25 @@ export default {
           // step3 if they clicked the checkbox above then flip the server model to true
           if (state.setToAutoAdd.autoAdd) {
             state.newItem.autoAdd = true
+            await itemsService.createItem(state.newItem)
           }
-          await itemsService.createItem(state.newItem)
+
+          if (state.recieveNotification.notificationChecked) {
+            state.newItem.notify = true
+            await itemsService.createItem(state.newItem)
+          }
+
+          // await itemsService.createItem(state.newItem)
           // if(state.autoAdd){
           //   AppState.autoAdd.push(body)}
           state.newItem = {}
           $('#new-item-form').modal('hide')
-          Notification.toast('Item Successfully Created!', 'success')
+          await Notification.toast('Item Successfully Created!', 'success')
         } catch (error) {
           Notification.toast('Error: ' + error, 'error')
         }
       }
+
       // async setToAutoAdd() {
       //   try {
       //     await itemsService.setToAutoAdd()
