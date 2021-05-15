@@ -1,6 +1,7 @@
 import { AppState } from '../AppState'
 import { logger } from '../utils/Logger'
 import { api } from './AxiosService'
+// import { itemsService } from './ItemsService'
 
 class ShoppingListItemsService {
   async createShoppingListItem(body) {
@@ -22,9 +23,15 @@ class ShoppingListItemsService {
     return 'Successfully Deleted!'
   }
 
-  async purchaseItems() {
-    // take shopping list item quantity and add it to item quantity.
-    // then remove item off shopping list.
+  async purchaseItems(selected) {
+    // iterate over each object. ||||| take shopping list item quantity and add it to item quantity.||||then remove item off shopping list.
+    debugger
+    for (let i = 0; i < selected.length; i++) {
+      // console.log(selected[i])
+      // in server, use a forEach item, get item, bring it back. take that items quantity that we found and add to it the selecteditem.quantity.
+
+      // this.deleteShoppingListItem(selected[i])
+    }
   }
 }
 

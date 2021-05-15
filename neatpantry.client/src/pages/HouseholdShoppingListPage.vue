@@ -116,10 +116,11 @@ export default {
       },
       async purchaseItems() {
         try {
-          // grab checked items by #id #item-row. If we need itemId off these shoppinglistitems, can we grab them? if checked, pass through to service.
-          //
-          // if()
-          await shoppingListItemsService.purchaseItems()
+          // grab rows by #id #item-row. |||| if(this contains a checkbox that is checked) ||||| pass through to service
+          // const shoppingItems = document.getElementsByClassName('check-one-box')
+
+          const selected = state.shoppingListItems.filter(i => i.selected)
+          await shoppingListItemsService.purchaseItems(selected)
         } catch (error) {
           Notification.toast('Error: ' + error, 'error')
         }
