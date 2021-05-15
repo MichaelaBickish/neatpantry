@@ -195,6 +195,7 @@ export default {
           }
           if (item.threshold >= item.quantity && item.notify === true) {
             await this.confirmedNotification()
+            item.itemId = item.id
             item.notify = true
             // await shoppingListItemsService.createShoppingListItem(item)
           } else if (item.quantity < 0) {
@@ -235,7 +236,7 @@ export default {
           }
 
           if (item.threshold >= item.quantity && item.notify === true) {
-            await this.confirmedNotification()
+            await this.confirmedNotification(item)
             item.notify = true
             // await shoppingListItemsService.createShoppingListItem(item)
           } else if (item.quantity < 0) {
@@ -259,7 +260,8 @@ export default {
       async confirmedNotification(item) {
         try {
           if (await Notification.confirmAction('Item min quantity met', 'Do you want to add to Shopping List?', 'question', 'Yes, add to shopping list')) {
-            await shoppingListItemsService.createShoppingListItem({ ...item, householdId: state.activeShelf.householdId })
+            // item.itemId = item.id
+            await shoppingListItemsService.createShoppingListItem({ ...item, itemId: item.id, householdId: state.activeShelf.householdId })
           }
         } catch (error) {
           Notification.toast('Error: ' + error, 'error')
