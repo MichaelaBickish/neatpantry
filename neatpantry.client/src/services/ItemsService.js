@@ -7,7 +7,7 @@ class ItemsService {
   async createItem(body) {
     const res = await api.post('api/items', body)
     this.getItemsByShelfId(body.shelfId, body.householdId)
-    logger.log(body)
+    // logger.log(body)
     // if checkbox is checked, add item to shopping list.
     if (body.addToShoppingList === true) {
       body.itemId = res.data.id
