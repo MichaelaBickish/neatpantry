@@ -3,13 +3,6 @@ import { logger } from '../utils/Logger'
 import { api } from './AxiosService'
 
 class ShoppingListItemsService {
-  async toggleCheck(items) {
-    document.getElementById('check-all-box').checked ? document.getElementById('check-one-box').checked = true : document.getElementById('check-one-box').checked = false
-    // $('#check-all-box').click(function() {
-    //   $('input[type=checkbox]').prop('checked', $(this).prop('checked'))
-    // })
-  }
-
   async createShoppingListItem(body) {
     const res = await api.post('api/shoppinglistitems', body)
     AppState.shoppingListItems = [...AppState.shoppingListItems, res.data]
@@ -27,6 +20,11 @@ class ShoppingListItemsService {
     AppState.shoppingListItems = AppState.shoppingListItems.filter(i => i.id !== item.id)
 
     return 'Successfully Deleted!'
+  }
+
+  async purchaseItems() {
+    // take shopping list item quantity and add it to item quantity.
+    // then remove item off shopping list.
   }
 }
 

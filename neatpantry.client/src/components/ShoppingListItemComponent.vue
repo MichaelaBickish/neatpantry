@@ -1,6 +1,6 @@
 <template class="shopping-list-item-component">
   <tr>
-    <th scope="row">
+    <th scope="row item-row">
       <input type="checkbox"
              class="check-one-checkbox cursor-pointer"
              id="check-one-box"

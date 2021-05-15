@@ -113,21 +113,17 @@ export default {
         } catch (error) {
           Notification.toast('Error: ' + error, 'error')
         }
+      },
+      async purchaseItems() {
+        try {
+          // grab checked items by #id #item-row. If we need itemId off these shoppinglistitems, can we grab them? if checked, pass through to service.
+          //
+          // if()
+          await shoppingListItemsService.purchaseItems()
+        } catch (error) {
+          Notification.toast('Error: ' + error, 'error')
+        }
       }
-      // async deleteListItem() {
-      //   try {
-
-      //   } catch (error) {
-      //     Notification.toast('Error: ' + error, 'error')
-      //   }
-      // },
-      // async purchaseItems() {
-      //   try {
-
-      //   } catch (error) {
-      //     Notification.toast('Error: ' + error, 'error')
-      //   }
-      // }
     }
   },
   components: { }
