@@ -167,7 +167,9 @@ export default {
       activeShelf: computed(() => AppState.activeShelf),
       item: computed(() => AppState.items),
       activeHousehold: computed(() => AppState.activeHousehold),
-      setToAutoAdd: computed(() => AppState)
+      setToAutoAdd: computed(() => AppState),
+      recieveNotification: computed(() => AppState.notificationChecked)
+
     })
 
     return {
@@ -225,6 +227,11 @@ export default {
             // then send it to be created in the shoppinglist
             await shoppingListItemsService.createShoppingListItem(item)
             // this says if the quantity will be less than zero then set it to zero. Makes sure we cannot getinto the negitives
+          }
+          if (item.threshold <= item.quantity && item.notify === true) {
+            await this.confirmedNotification()
+            item.notify = true
+            // await shoppingListItemsService.createShoppingListItem(item)
           } else if (item.quantity < 0) {
             item.quantity = 0
             return
@@ -238,6 +245,15 @@ export default {
         try {
           if (await Notification.confirmAction()) {
             await itemsService.deleteItem({ ...item, householdId: state.activeShelf.householdId })
+          }
+        } catch (error) {
+          Notification.toast('Error: ' + error, 'error')
+        }
+      },
+      async confirmedNotification(item) {
+        try {
+          if (await Notification.confirmAction('Item min quantity met', 'Do you want to add to Shopping List?', 'question', 'Yes, add to shopping list')) {
+            await shoppingListItemsService.createShoppingListItem({ ...item, householdId: state.activeShelf.householdId })
           }
         } catch (error) {
           Notification.toast('Error: ' + error, 'error')

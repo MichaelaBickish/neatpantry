@@ -11,5 +11,6 @@ export const AppState = reactive({
   items: [],
   shoppingListItems: [],
   shoppingListItemsAreChecked: false,
-  autoAdd: false
+  autoAdd: false,
+  notificationChecked: false
 })

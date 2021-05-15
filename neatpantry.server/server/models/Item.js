@@ -24,6 +24,7 @@ const Item = new Schema(
     quantity: { type: Number, default: 1 },
     threshold: { type: Number, default: 0 },
     autoAdd: { type: Boolean, default: false },
+    notify: { type: Boolean, default: false },
     creatorId: { type: String, ref: 'Account', required: true },
     shelfId: { type: ObjectId, ref: 'Shelf', required: true },
     householdId: { type: ObjectId, ref: 'Household', required: true },
