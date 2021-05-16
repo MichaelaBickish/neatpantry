@@ -185,13 +185,19 @@ export default {
       async saveEdit(item) {
         try {
           // if the items quantity is less than or equal to threshold AND the autoAdd box was check on creation
-          if (item.threshold <= item.quantity && state.setToAutoAdd.autoAdd) {
+          if (item.threshold >= item.quantity && item.autoAdd === true) {
             // attatch the items id and save it as item.itemId
             item.itemId = item.id
             item.autoAdd = true
             // then send it to be created in the shoppinglist
             await shoppingListItemsService.createShoppingListItem(item)
             // this says if the quantity will be less than zero then set it to zero. Makes sure we cannot getinto the negitives
+          }
+          if (item.threshold >= item.quantity && item.notify === true) {
+            await this.confirmedNotification()
+            item.itemId = item.id
+            item.notify = true
+            // await shoppingListItemsService.createShoppingListItem(item)
           } else if (item.quantity < 0) {
             item.quantity = 0
             return
@@ -220,7 +226,7 @@ export default {
           item.quantity--
 
           // if the items quantity is less than or equal to threshold AND the autoAdd box was check on creation
-          if (item.threshold <= item.quantity && state.setToAutoAdd.autoAdd) {
+          if (item.threshold >= item.quantity && item.autoAdd === true) {
             // attatch the items id and save it as item.itemId
             item.itemId = item.id
             item.autoAdd = true
@@ -228,8 +234,9 @@ export default {
             await shoppingListItemsService.createShoppingListItem(item)
             // this says if the quantity will be less than zero then set it to zero. Makes sure we cannot getinto the negitives
           }
-          if (item.threshold <= item.quantity && item.notify === true) {
-            await this.confirmedNotification()
+
+          if (item.threshold >= item.quantity && item.notify === true) {
+            await this.confirmedNotification(item)
             item.notify = true
             // await shoppingListItemsService.createShoppingListItem(item)
           } else if (item.quantity < 0) {
@@ -253,7 +260,8 @@ export default {
       async confirmedNotification(item) {
         try {
           if (await Notification.confirmAction('Item min quantity met', 'Do you want to add to Shopping List?', 'question', 'Yes, add to shopping list')) {
-            await shoppingListItemsService.createShoppingListItem({ ...item, householdId: state.activeShelf.householdId })
+            // item.itemId = item.id
+            await shoppingListItemsService.createShoppingListItem({ ...item, itemId: item.id, householdId: state.activeShelf.householdId })
           }
         } catch (error) {
           Notification.toast('Error: ' + error, 'error')
