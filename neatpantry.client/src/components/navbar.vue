@@ -1,13 +1,10 @@
 <template>
   <nav class="navbar navbar-expand-lg navbar-dark bg-primary">
-    <router-link class="navbar-brand d-flex" :to="{ name: 'Home' }">
+    <router-link class="navbar-brand d-flex" :to="{ name: 'HouseholdsPage' }">
       <div class="d-flex flex-column align-items-center">
-        <h1>NeatPantry</h1>
-        <!-- <img
-          alt="logo"
-          src="../assets/img/cw-logo.png"
-          height="45"
-        /> -->
+        <h1 class="title-font" title="go to your households">
+          NEAT
+        </h1>
       </div>
     </router-link>
     <button
@@ -23,21 +20,6 @@
     </button>
     <div class="collapse navbar-collapse" id="navbarText">
       <ul class="navbar-nav mr-auto">
-        <li class="nav-item">
-          <router-link :to="{ name: 'Home' }" class="nav-link">
-            Home
-          </router-link>
-        </li>
-        <li class="nav-item">
-          <router-link :to="{ name: 'About' }" class="nav-link">
-            About
-          </router-link>
-        </li>
-        <!-- <li class="nav-item">
-          <router-link :to="{ name: 'PantryPage'}" class="nav-link">
-            Pantry Page
-          </router-link>
-        </li> -->
       </ul>
       <span class="navbar-text">
         <button
@@ -56,10 +38,10 @@
             <img
               :src="user.picture"
               alt="user photo"
-              height="40"
-              class="rounded-circle"
+              height="50"
+              class="rounded-circle border shadow-sm"
             />
-            <span class="mx-3">{{ user.name }}</span>
+            <span class="mx-3 desktop-gone">{{ user.name }}</span>
           </div>
           <div
             class="dropdown-menu p-0 list-group w-100"
@@ -69,6 +51,11 @@
             <router-link :to="{ name: 'Account' }">
               <div class="list-group-item list-group-item-action hoverable">
                 Account
+              </div>
+            </router-link>
+            <router-link :to="{ name: 'HouseholdsPage' }">
+              <div class="list-group-item list-group-item-action hoverable">
+                Households
               </div>
             </router-link>
             <div
@@ -88,17 +75,25 @@
 import { AuthService } from '../services/AuthService'
 import { AppState } from '../AppState'
 import { computed, reactive } from 'vue'
+import { useRouter } from 'vue-router'
+
 export default {
   name: 'Navbar',
   setup() {
+    const router = useRouter()
     const state = reactive({
+      user: computed(() => AppState.user),
       dropOpen: false
+
     })
     return {
       state,
       user: computed(() => AppState.user),
       async login() {
-        AuthService.loginWithPopup()
+        await AuthService.loginWithPopup()
+        if (state.user.isAuthenticated) {
+          router.push({ name: 'HouseholdsPage' })
+        }
       },
       async logout() {
         await AuthService.logout({ returnTo: window.location.origin })
@@ -109,11 +104,16 @@ export default {
 </script>
 
 <style scoped>
+h1{
+  margin: 0;
+  padding: 0;
+}
 .dropdown-menu {
   user-select: none;
   display: block;
   transform: scale(0);
   transition: all 0.15s linear;
+
 }
 .dropdown-menu.show {
   transform: scale(1);
@@ -129,5 +129,16 @@ a:hover {
 }
 .nav-item .nav-link.router-link-exact-active{
   color: var(--primary);
+}
+.title-font{
+  font-family: 'Work Sans', sans-serif;
+}
+@media only screen and (min-width: 600px) {
+.dropdown-menu {
+  left: -5.5rem;
+}
+.desktop-gone{
+  display: none;
+}
 }
 </style>

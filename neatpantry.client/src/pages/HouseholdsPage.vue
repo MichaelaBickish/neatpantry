@@ -108,41 +108,13 @@
         </div>
       </div>
     </div>
-
-    <!-- <div class="row">
-      <div class="col">
-        <div class="row">
-          <div class="col-md-12 text-center">
-            <h1>How it Works</h1>
-          </div>
-        </div>
-
-        <div class="row">
-          <div class="col col-md-4 d-flex flex-column align-items-center">
-            <img src="//placehold.it/200x200" alt="">
-            <h2>Create</h2>
-            <p class="">
-              Start your household <br>Add household members<br>Invite members with your household's unique passcode
-            </p>
-          </div>
-          <div class="col col-md-4 d-flex flex-column align-items-center">
-            <img src="//placehold.it/200x200" alt="">
-            <h2>Customize</h2>
-            <p class="">
-              Add "shelves"<br>Add items to your shelves<br>Utilize a shopping list
-            </p>
-          </div>
-          <div class="col col-md-4 d-flex flex-column align-items-center">
-            <img src="//placehold.it/200x200" alt="">
-            <h2>Organize</h2>
-            <p class="">
-              Access your accurate item quantities<br>Get notified on expiration dates or when your item quantity reaches a certain number<br>
-            </p>
-          </div>
-        </div>
+    <div class="row mt-4">
+      <div class="col d-flex justify-content-center">
+        <h3 class="text-gray">
+          choose a household
+        </h3>
       </div>
-    </div> -->
-
+    </div>
     <div class="row my-4 py-4 mx-md-5 d-flex justify-content-center border-top border-bottom">
       <div class="col text-center" v-if="state.households.length == 0">
         <span class="text-gray"> You don't have any households! </span>

@@ -3,6 +3,17 @@
 <template>
   <!-- Need edit profile server function -->
   <div class="container-fluid">
+    <div class="row bg-light py-1 pl-2">
+      <div class="col d-flex justify-content-start text-primary">
+        <router-link class="text-primary" :to="{name: 'HouseholdsPage', params: {id: state.account.id}}">
+          <h3><i class="fas fa-angle-left" /> back</h3>
+        </router-link>
+      </div>
+      <div class="col d-flex justify-content-center">
+        <h1><!-- ENTER TEXT HERE --></h1>
+      </div>
+      <div class="col d-flex justify-content-end"></div>
+    </div>
     <div class="row d-flex justify-content-center">
       <div class="col col-sm-10 col-md-6">
         <div class="card p-4 shadow-sm mt-3">

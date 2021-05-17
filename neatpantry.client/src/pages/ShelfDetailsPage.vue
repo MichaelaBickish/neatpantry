@@ -1,5 +1,16 @@
 <template>
   <div class="shelf-details-page container-fluid">
+    <div class="row bg-light py-1 pl-2">
+      <div class="col d-flex justify-content-start text-primary">
+        <router-link class="text-primary" :to="{name: 'PantryPage', params: {id: state.activeHousehold.id}}">
+          <h3><i class="fas fa-angle-left" /> back</h3>
+        </router-link>
+      </div>
+      <div class="col d-flex justify-content-center">
+        <h1><!-- ENTER TEXT HERE --></h1>
+      </div>
+      <div class="col d-flex justify-content-end"></div>
+    </div>
     <div class="row" v-if="state.activeShelf">
       <!-- TODO mark to teach on contenteditable concept -->
       <!-- <h1><contentEditableComponent v-model="state.activeShelf.title" @saveEdits="saveEdits" /></h1> -->

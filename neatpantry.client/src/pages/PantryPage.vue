@@ -1,5 +1,16 @@
 <template>
   <div class="pantry-page container-fluid px-0 " v-if="state.activeHousehold">
+    <div class="row bg-light py-1 pl-2">
+      <div class="col d-flex justify-content-start text-primary">
+        <router-link class="text-primary" :to="{name: 'HouseholdsPage', params: {id: state.account.id}}">
+          <h3><i class="fas fa-angle-left" /> back</h3>
+        </router-link>
+      </div>
+      <div class="col d-flex justify-content-center">
+        <h1><!-- ENTER TEXT HERE --></h1>
+      </div>
+      <div class="col d-flex justify-content-end"></div>
+    </div>
     <div class="row">
       <div class="col-md-9">
         <h1 contenteditable="true" class="p-3 m-2" title="Rename Household on your Page" @blur="saveEdits">

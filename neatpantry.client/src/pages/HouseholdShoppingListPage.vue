@@ -1,5 +1,16 @@
 <template>
   <div class="household-shopping-list-page container-fluid">
+    <div class="row bg-light py-1 pl-2">
+      <div class="col d-flex justify-content-start text-primary">
+        <router-link class="text-primary" :to="{name: 'PantryPage', params: {id: state.activeHousehold.id}}">
+          <h3><i class="fas fa-angle-left" /> back</h3>
+        </router-link>
+      </div>
+      <div class="col d-flex justify-content-center">
+        <h1></h1>
+      </div>
+      <div class="col d-flex justify-content-end"></div>
+    </div>
     <div class="row">
       <div class="col text-center">
         <h1>Shopping List</h1>
@@ -87,7 +98,8 @@ export default {
     const route = useRoute()
     const state = reactive({
       shoppingListItems: computed(() => AppState.shoppingListItems),
-      shoppingListItemsAreChecked: computed(() => AppState.shoppingListItemsAreChecked)
+      shoppingListItemsAreChecked: computed(() => AppState.shoppingListItemsAreChecked),
+      activeHousehold: computed(() => AppState.activeHousehold)
     })
     onMounted(async() => {
       try {

@@ -113,7 +113,8 @@
         </div>
       </div>
     </div>
-    <div class="row">
+    <!-- TEMP LINK -->
+    <!-- <div class="row">
       <div class="col">
         <router-link :to="{ name: 'HouseholdsPage', params: {id: state.account.id} }" class="">
           <span>
@@ -121,7 +122,7 @@
           </span>
         </router-link>
       </div>
-    </div>
+    </div> -->
   </div>
 </template>
 
