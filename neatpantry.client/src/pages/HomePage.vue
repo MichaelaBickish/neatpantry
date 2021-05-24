@@ -2,9 +2,9 @@
 
 <template>
   <div class="container-fluid">
-    <div class="row justify-content-center bg-light py-5">
+    <div class="row justify-content-center py-5 background-pantry">
       <div class="col col-md-6">
-        <div class="card text-center shadow-sm">
+        <div class="card text-center shadow-lg">
           <div class="card-body">
             <h1 class="card-title">
               Welcome!
@@ -76,23 +76,44 @@
       <div class="col">
         <div class="row">
           <div class="col col-md-4 d-flex flex-column align-items-center p-5">
-            <i class="fas fa-edit fa-5x text-gray mb-2" />
-            <h2>Create</h2>
-            <p class="text-center text-gray mt-2">
+            <img
+              alt="create"
+              src="../assets/img/create.png"
+              width="125"
+              title="create icon"
+            />
+            <h2 class="text-gray">
+              Create
+            </h2>
+            <p class="text-center mt-2">
               Start your household Add household members. Invite members with your household's unique passcode.
             </p>
           </div>
           <div class="col col-md-4 d-flex flex-column align-items-center p-5">
-            <i class="fas fa-cogs fa-5x text-gray mb-2" />
-            <h2>Customize</h2>
-            <p class="text-center text-gray mt-2">
+            <img
+              alt="customize"
+              src="../assets/img/customize.png"
+              width="125"
+              title="customize icon"
+            />
+            <h2 class="text-gray">
+              Customize
+            </h2>
+            <p class="text-center mt-2">
               Add shelves to your pantry. Add items to your shelves. Create a shopping list out of your chosen items.
             </p>
           </div>
           <div class="col col-md-4 d-flex flex-column align-items-center p-5">
-            <i class="fas fa-clipboard-check fa-5x text-gray mb-2" />
-            <h2>Organize</h2>
-            <p class="text-center text-gray mt-2">
+            <img
+              alt="organize"
+              src="../assets/img/organize.png"
+              width="125"
+              title="create icon"
+            />
+            <h2 class="text-gray">
+              Organize
+            </h2>
+            <p class="text-center mt-2">
               Access accurate item quantities. Get notified on expiration dates or when your item quantity reaches a certain number.
             </p>
           </div>
@@ -176,6 +197,9 @@ export default {
 }
 .text-gray{
   color: gray
+}
+.background-pantry{
+  background-image: url('../assets/img/pantryBackground.jpg');
 }
 </style>
 

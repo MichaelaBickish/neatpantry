@@ -2,9 +2,9 @@
 
 <template>
   <div class="container-fluid">
-    <div class="row justify-content-center bg-light py-5">
+    <div class="row justify-content-center py-5 background-pantry">
       <div class="col col-md-6">
-        <div class="card text-center shadow-sm">
+        <div class="card text-center shadow">
           <div class="card-body">
             <h1 class="card-title">
               Your Households Page
@@ -108,13 +108,13 @@
         </div>
       </div>
     </div>
-    <div class="row mt-4">
+    <!-- <div class="row mt-4">
       <div class="col d-flex justify-content-center">
         <h3 class="text-gray">
           choose a household
         </h3>
       </div>
-    </div>
+    </div> -->
     <div class="row my-4 py-4 mx-md-5 d-flex justify-content-center border-top border-bottom">
       <div class="col text-center" v-if="state.households.length == 0">
         <span class="text-gray"> You don't have any households! </span>
@@ -197,6 +197,9 @@ export default {
 }
 .text-gray{
   color: gray;
+}
+.background-pantry{
+  background-image: url('../assets/img/pantryBackground.jpg');
 }
 </style>
 

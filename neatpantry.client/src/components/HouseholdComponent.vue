@@ -1,14 +1,15 @@
 <template>
-  <div class="col col-sm-6 col-md-4 d-flex justify-content-center mt-5">
+  <div class="col col-sm-6 col-md-4 d-flex justify-content-center mt-2">
     <div class="row">
-      <div class="card shadow-sm" style="width: 20rem;">
+      <div class="card shadow" style="width: 20rem;">
         <router-link class="text-white" :to="{name: 'PantryPage', params: {id: householdProp.id}}">
           <div class="card-header text-center bg-primary">
             <h4><b>{{ householdProp.title }}</b></h4>
           </div>
         </router-link>
         <!-- Icon Link -->
-        <!-- <div class="card-body">
+        <div class="card-body p-0 bg-light">
+          <!--
           <router-link class="text-dark" :to="{name: 'PantryPage', params: {id: householdProp.id}}">
             <div class="row border-bottom mb-3">
               <div class="col d-flex justify-content-center pb-4">
@@ -16,20 +17,21 @@
               </div>
             </div>
           </router-link> -->
-        <div class="row my-3">
-          <div class="col d-flex justify-content-center border-right">
-            <router-link :to="{ name: 'HouseholdMembersPage', params: { id: householdProp.id} }">
-              <button type="button" class="btn btn-secondary btn-sm">
-                members
-              </button>
-            </router-link>
-          </div>
-          <div class="col d-flex justify-content-center">
-            <router-link :to="{ name: 'HouseholdShoppingListPage', params: { id: householdProp.id} }">
-              <button type="button" class="btn btn-secondary btn-sm">
-                shopping list
-              </button>
-            </router-link>
+          <div class="row my-3">
+            <div class="col d-flex justify-content-center border-right">
+              <router-link :to="{ name: 'HouseholdMembersPage', params: { id: householdProp.id} }">
+                <button type="button" class="btn btn-primary btn-sm">
+                  members
+                </button>
+              </router-link>
+            </div>
+            <div class="col d-flex justify-content-center">
+              <router-link :to="{ name: 'HouseholdShoppingListPage', params: { id: householdProp.id} }">
+                <button type="button" class="btn btn-primary btn-sm">
+                  shopping list
+                </button>
+              </router-link>
+            </div>
           </div>
         </div>
       </div>

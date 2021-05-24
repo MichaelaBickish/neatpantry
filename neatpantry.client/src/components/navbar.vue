@@ -3,7 +3,7 @@
     <router-link class="navbar-brand d-flex" :to="{ name: 'HouseholdsPage' }">
       <div class="d-flex flex-column align-items-center">
         <h1 class="title-font" title="go to your households">
-          NEAT
+          NeatPantry
         </h1>
       </div>
     </router-link>
