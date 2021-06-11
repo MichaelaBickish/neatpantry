@@ -29,12 +29,15 @@ const ShoppingListItem = new Schema(
   { timestamps: true, toJSON: { virtuals: true } }
 )
 
+// FIXME
 ShoppingListItem.virtual('creator', {
   localField: 'creatorId',
   ref: 'Account',
   foreignField: '_id',
   justOne: true
 })
+// FIXME virtual needed for Item and Household
+// copy the section and replace lines with the model value as well as the reference name
 
 ShoppingListItem.post('find', async(docs) => {
   for (const doc of docs) {
