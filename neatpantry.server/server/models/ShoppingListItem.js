@@ -20,8 +20,8 @@ const ShoppingListItem = new Schema(
   {
     title: { type: String, required: true },
     creatorId: { type: String, ref: 'Account', required: true },
-    itemId: { type: ObjectId, ref: 'Item', required: true },
-    householdId: { type: ObjectId, ref: 'Household', required: true },
+    itemId: { type: ObjectId, ref: 'Item', required: true }, // FIXME this needs a virtual
+    householdId: { type: ObjectId, ref: 'Household', required: true }, // FIXME this needs a virtual
     quantity: { type: Number, default: 1 },
     wishlist: { type: Boolean, default: false },
     notes: [Note]
